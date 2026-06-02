@@ -145,14 +145,17 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   color:#111;
   display:flex;
   flex-direction:column;
-  font-size:10px;
+  font-size:12px;
+  font-weight:bold;
+  min-height:730px;
 }
 
 /* TOP BAND: diagram(s) left | dims+notes right */
 .spec-top{
   display:flex;
   border-bottom:2px solid #666;
-  min-height:340px;
+  flex:1;
+  min-height:490px;
 }
 
 /* LEFT: diagram image area */
@@ -160,22 +163,23 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   flex:1;
   border-right:1px solid #aaa;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:center;
   justify-content:center;
   padding:10px 12px;
-  gap:6px;
+  gap:10px;
   background:#f0eff0;
   position:relative;
 }
 .spec-img-panel img{
   display:block;
-  max-width:100%;
   object-fit:contain;
+  flex:1;
+  min-width:0;
 }
-.spec-img-panel.one img{ max-height:310px; }
-.spec-img-panel.two img{ max-height:148px; }
-.spec-img-divider{ width:100%; border-top:1px dashed #bbb; }
+.spec-img-panel.one img{ max-height:460px; max-width:100%; }
+.spec-img-panel.two img{ max-height:460px; max-width:50%; }
+.spec-img-divider{ height:100%; border-left:1px dashed #bbb; align-self:stretch; }
 .spec-img-empty{
   display:flex;align-items:center;justify-content:center;
   width:100%;height:100%;color:#bbb;font-size:12px;font-style:italic;
@@ -184,8 +188,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 
 /* RIGHT: dims + notes stacked — same fixed width */
 .spec-right{
-  width:390px;
-  min-width:390px;
+  width:260px;
+  min-width:260px;
   display:flex;
   flex-direction:column;
   border-left:none;
@@ -194,11 +198,11 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 /* ── DIMENSIONS block ── */
 .spec-dims-block{
   border-bottom:1px solid #aaa;
-  padding:7px 8px 6px;
+  padding:10px 8px 8px;
 }
 .spec-block-title{
   text-align:center;
-  font-size:11px;
+  font-size:13px;
   font-weight:bold;
   text-decoration:underline;
   letter-spacing:.05em;
@@ -214,7 +218,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 }
 .spec-rt th, .spec-rt td{
   border:1px solid #888;
-  padding:2px 3px;
+  padding:4px 3px;
   text-align:center;
   overflow:hidden;
   white-space:nowrap;
@@ -225,7 +229,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 /* Dimension header row */
 .spec-rt thead.dim-head th{
   background:#c8d4e8;
-  font-size:9px;
+  font-size:13px;
   font-weight:bold;
   line-height:1.3;
 }
@@ -234,6 +238,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   font-weight:bold;
 }
 /* dimension data rows */
+.spec-rt tbody.dim-body td{
+  font-size:13px;
+  font-weight:bold;
+}
 .spec-rt tbody.dim-body td.item-cell{
   color:#cc0000;
   font-weight:bold;
@@ -247,14 +255,14 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 /* ── NOTES block ── */
 .spec-notes-block{
   flex:1;
-  padding:7px 8px 4px;
+  padding:10px 8px 6px;
   display:flex;
   flex-direction:column;
 }
 /* Notes header row — same bg as dims header */
 .spec-rt thead.note-head th{
   background:#c8d4e8;
-  font-size:9px;
+  font-size:13px;
   font-weight:bold;
 }
 .spec-rt thead.note-head th.code-hdr{
@@ -264,6 +272,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   padding-left:4px;
 }
 /* note data rows */
+.spec-rt tbody.note-body td{
+  font-size:13px;
+  font-weight:bold;
+}
 .spec-rt tbody.note-body td.code-cell{
   color:#0000cc;
   font-weight:bold;
@@ -271,7 +283,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   padding-left:4px;
 }
 .spec-extra-note{
-  font-size:9px;
+  font-size:11px;
   color:#cc0000;
   font-style:italic;
   text-align:right;
@@ -282,21 +294,21 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 /* ── MATERIALS band ── */
 .spec-mats{
   border-top:2px solid #666;
-  padding:5px 8px 7px;
+  padding:8px 8px 12px;
 }
 .spec-mats-title{
   text-align:center;
-  font-size:11px;
+  font-size:13px;
   font-weight:bold;
   text-decoration:underline;
   letter-spacing:.05em;
-  margin-bottom:5px;
+  margin-bottom:6px;
 }
 .spec-mt{
   width:100%;
   border-collapse:collapse;
   table-layout:fixed;
-  font-size:10px;
+  font-size:14px;
 }
 .spec-mt col.mc-item{ width:40px; }
 .spec-mt col.mc-qty { width:38px; }
@@ -306,23 +318,23 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .spec-mt th{
   background:#222;
   color:#fff;
-  padding:3px 6px;
+  padding:4px 6px;
   text-align:left;
-  font-size:9px;
+  font-size:13px;
   font-weight:bold;
   letter-spacing:.05em;
   border:1px solid #555;
 }
 .spec-mt td{
-  padding:2px 6px;
+  padding:4px 6px;
   border:1px solid #ccc;
   vertical-align:top;
 }
 .spec-mt tr:nth-child(even) td{ background:#f6f6f6; }
 .spec-mt td.m-item{ font-weight:bold; color:#cc0000; text-align:center; }
 .spec-mt td.m-qty { text-align:center; }
-.spec-mt td.m-code-blue{ color:#0000cc; font-size:9px; }
-.spec-mt td.m-note{ color:#cc0000; font-size:9px; }
+.spec-mt td.m-code-blue{ color:#0000cc; font-size:13px; }
+.spec-mt td.m-note{ color:#cc0000; font-size:13px; }
 
 /* ── FOOTER BANNER ── */
 .spec-footer{
@@ -330,26 +342,26 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   border-top:2px solid #888;
   display:flex;
   align-items:stretch;
-  min-height:78px;
+  min-height:90px;
 }
 .spec-footer-left{
   flex:1;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:8px 18px;
+  padding:10px 18px;
   border-right:1px solid #aaa;
 }
 .spec-series-script{
   font-family:'Dancing Script','Barlow Condensed',cursive;
-  font-size:26px;
+  font-size:30px;
   font-weight:700;
   color:#111;
   letter-spacing:.02em;
   line-height:1.2;
 }
 .spec-subtitle{
-  font-size:10px;
+  font-size:12px;
   color:#333;
   font-style:italic;
   margin-top:3px;
@@ -363,10 +375,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   padding:8px 14px;
   border-right:1px solid #aaa;
   gap:2px;
-  min-width:70px;
+  min-width:80px;
 }
-.spec-page-lbl{ font-size:8px; font-weight:bold; color:#555; letter-spacing:.07em; text-transform:uppercase; }
-.spec-page-val{ font-size:13px; font-weight:bold; color:#111; }
+.spec-page-lbl{ font-size:10px; font-weight:bold; color:#555; letter-spacing:.07em; text-transform:uppercase; }
+.spec-page-val{ font-size:15px; font-weight:bold; color:#111; }
 .spec-footer-right{
   display:flex;
   flex-direction:column;
@@ -374,18 +386,18 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   justify-content:center;
   padding:8px 16px;
   gap:2px;
-  min-width:170px;
+  min-width:180px;
   position:relative;
 }
-.spec-logo-img{ max-width:140px; max-height:52px; object-fit:contain; }
+.spec-logo-img{ max-width:150px; max-height:60px; object-fit:contain; }
 .spec-logo-script{
   font-family:'Dancing Script',cursive;
-  font-size:28px;
+  font-size:32px;
   font-weight:700;
   color:#111;
 }
-.spec-website{ font-size:8px; color:#555; }
-.spec-year{ font-size:8px; color:#aaa; position:absolute; bottom:4px; right:6px; }
+.spec-website{ font-size:10px; color:#555; }
+.spec-year{ font-size:9px; color:#aaa; position:absolute; bottom:4px; right:6px; }
 
 /* ── PRINT ── */
 @media print{
@@ -395,8 +407,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   .main{display:block;overflow:visible}
   .content{padding:0;overflow:visible}
   .spec-wrap{padding:0;background:none;border-radius:0}
-  .spec{width:100%!important;box-shadow:none!important;border:1px solid #888!important}
-  @page{size:landscape;margin:10mm}
+  .spec{width:100%!important;min-height:0!important;box-shadow:none!important;border:1px solid #888!important}
+  @page{size:11in 8.5in landscape;margin:6mm}
 }
 </style>
 </head>
