@@ -4,228 +4,333 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>FenceSpec Pro — Spec Sheet Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --navy:#0f2640;--navy2:#1a3a5c;--navy3:#254d78;
+  --navy:#0f2640;--navy2:#1a3a5c;
   --gold:#c8943a;--gold2:#e0a84a;
   --cream:#f8f4ee;--cream2:#f0ebe0;
-  --bg:#e8e5df;--surface:#f7f5f1;
-  --border:#d0ccc4;--border2:#b8b4ac;
+  --bg:#e2dfd8;--surface:#f5f3ef;
+  --border:#ccc9c0;--border2:#b0aca4;
   --text:#1a1714;--text2:#4a4540;--text3:#7a7570;
   --danger:#b53528;--danger-bg:#fdf0ee;
   --rad:5px;--rad2:9px;
-  --sh:0 2px 8px rgba(15,38,64,.10);
-  --sh2:0 4px 20px rgba(15,38,64,.14);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
 
-/* APP SHELL */
+/* ── APP BAR ── */
 .app-bar{background:var(--navy);height:52px;display:flex;align-items:center;padding:0 20px;gap:14px;flex-shrink:0;border-bottom:3px solid var(--gold)}
 .app-logo{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;color:#fff;letter-spacing:.04em}
 .app-logo em{color:var(--gold2);font-style:normal}
-.app-divider{width:1px;height:22px;background:rgba(255,255,255,.18)}
-.app-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.07em;text-transform:uppercase}
+.app-div{width:1px;height:22px;background:rgba(255,255,255,.18)}
+.app-sub{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.07em;text-transform:uppercase}
 .spacer{flex:1}
 .app-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;padding:6px 14px;border-radius:var(--rad);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
 .app-btn:hover{background:rgba(255,255,255,.2)}
 .app-btn.gold{background:var(--gold);border-color:var(--gold2);font-weight:600}
 .app-btn.gold:hover{background:var(--gold2)}
-
 .app-body{display:flex;flex:1;overflow:hidden}
 
-/* SIDEBAR */
-.sidebar{width:255px;min-width:255px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.sb-head{padding:14px 14px 10px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:9px}
+/* ── SIDEBAR ── */
+.sidebar{width:252px;min-width:252px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sb-head{padding:13px 13px 9px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
 .sb-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
 .sb-search{position:relative}
-.sb-search input{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--rad);padding:7px 10px 7px 30px;font-size:12px;font-family:'Barlow',sans-serif;color:var(--text)}
+.sb-search input{width:100%;background:#fff;border:1px solid var(--border);border-radius:var(--rad);padding:6px 10px 6px 28px;font-size:12px;font-family:'Barlow',sans-serif;color:var(--text)}
 .sb-search input:focus{outline:none;border-color:var(--navy2)}
-.sb-search svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
-.style-list{flex:1;overflow-y:auto;padding:6px}
-.style-item{padding:9px 11px;border-radius:var(--rad);cursor:pointer;border:1px solid transparent;margin-bottom:2px;display:flex;align-items:center;gap:9px;transition:all .14s}
+.sb-search svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none}
+.style-list{flex:1;overflow-y:auto;padding:5px}
+.style-item{padding:8px 10px;border-radius:var(--rad);cursor:pointer;border:1px solid transparent;margin-bottom:2px;display:flex;align-items:center;gap:8px;transition:all .13s}
 .style-item:hover{background:var(--cream);border-color:var(--border)}
 .style-item.active{background:var(--navy);border-color:var(--navy2);color:#fff}
-.si-icon{width:32px;height:32px;border-radius:var(--rad);background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.si-icon{width:30px;height:30px;border-radius:var(--rad);background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .style-item.active .si-icon{background:rgba(255,255,255,.1)}
 .si-info{flex:1;min-width:0}
 .si-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .si-cat{font-size:11px;color:var(--text3);margin-top:1px}
-.style-item.active .si-cat{color:rgba(255,255,255,.55)}
-.sb-foot{padding:10px 12px;border-top:1px solid var(--border)}
-.btn-new{width:100%;background:var(--navy);color:#fff;border:none;border-radius:var(--rad);padding:9px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .15s}
+.style-item.active .si-cat{color:rgba(255,255,255,.5)}
+.sb-foot{padding:9px 11px;border-top:1px solid var(--border)}
+.btn-new{width:100%;background:var(--navy);color:#fff;border:none;border-radius:var(--rad);padding:8px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
 .btn-new:hover{background:var(--navy2)}
-.sb-empty{padding:28px 14px;text-align:center;color:var(--text3);font-size:12px;line-height:1.7}
+.sb-empty{padding:26px 13px;text-align:center;color:var(--text3);font-size:12px;line-height:1.7}
 
-/* MAIN */
+/* ── MAIN ── */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.toolbar{background:var(--surface);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:7px;flex-shrink:0}
 .toolbar-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--navy);letter-spacing:.03em;flex:1}
 .tab-group{display:flex;gap:2px}
-.tab{padding:6px 13px;border:1px solid var(--border);border-radius:var(--rad);background:transparent;font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;color:var(--text2);transition:all .14s}
+.tab{padding:6px 12px;border:1px solid var(--border);border-radius:var(--rad);background:transparent;font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;color:var(--text2);transition:all .13s}
 .tab:hover{background:var(--cream)}
 .tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.btn{padding:6px 13px;border-radius:var(--rad);border:1px solid var(--border);background:#fff;font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:5px;transition:all .14s;white-space:nowrap}
+.btn{padding:6px 12px;border-radius:var(--rad);border:1px solid var(--border);background:#fff;font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:5px;transition:all .13s;white-space:nowrap}
 .btn:hover{background:var(--cream);border-color:var(--border2)}
 .btn-print{background:var(--gold);border-color:var(--gold2);color:#fff;font-weight:600}
 .btn-print:hover{background:var(--gold2)}
 .btn-del{color:var(--danger)}
 .btn-del:hover{background:var(--danger-bg);border-color:#dca09a}
+.content{flex:1;overflow-y:auto;padding:16px}
 
-.content{flex:1;overflow-y:auto;padding:18px}
-
-/* EMPTY */
+/* ── EMPTY ── */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--text3)}
-.empty-icon{font-size:52px;opacity:.25}
+.empty-icon{font-size:50px;opacity:.22}
 .empty h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text2);letter-spacing:.02em}
-.empty p{font-size:13px;text-align:center;max-width:280px;line-height:1.6}
+.empty p{font-size:13px;text-align:center;max-width:275px;line-height:1.6}
 .empty-cta{background:var(--navy);color:#fff;border:none;border-radius:var(--rad);padding:9px 22px;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px}
 .empty-cta:hover{background:var(--navy2)}
 
-/* FORM */
-.fsec{background:#fff;border:1px solid var(--border);border-radius:var(--rad2);padding:15px 17px;margin-bottom:12px}
-.fsec-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--navy);margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid var(--cream2);display:flex;align-items:center;gap:7px}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:9px 15px}
-.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px 15px}
-.fg4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px 15px}
+/* ── FORM ── */
+.fsec{background:#fff;border:1px solid var(--border);border-radius:var(--rad2);padding:14px 16px;margin-bottom:11px}
+.fsec-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--navy);margin-bottom:11px;padding-bottom:6px;border-bottom:2px solid var(--cream2);display:flex;align-items:center;gap:6px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 14px}
 .f{display:flex;flex-direction:column;gap:4px}
 .f.full{grid-column:1/-1}
 .f label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3)}
-.f input,.f select,.f textarea{border:1px solid var(--border);border-radius:var(--rad);padding:7px 9px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--text);background:var(--surface);width:100%;transition:border-color .14s}
+.f input,.f select,.f textarea{border:1px solid var(--border);border-radius:var(--rad);padding:6px 8px;font-family:'Barlow',sans-serif;font-size:13px;color:var(--text);background:var(--surface);width:100%;transition:border-color .13s}
 .f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--navy2);background:#fff}
-.f textarea{resize:vertical;min-height:65px}
+.f textarea{resize:vertical;min-height:60px}
 
-/* IMAGE UPLOAD */
-.img-upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
-.img-slot{border:2px dashed var(--border2);border-radius:var(--rad);min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;background:var(--cream);position:relative;overflow:hidden}
+/* image upload */
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:7px}
+.img-slot{border:2px dashed var(--border2);border-radius:var(--rad);min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .14s;background:var(--cream);position:relative;overflow:hidden;text-align:center;padding:8px}
 .img-slot:hover{border-color:var(--navy2);background:var(--cream2)}
-.img-slot img{width:100%;height:100%;object-fit:contain;border-radius:var(--rad)}
-.img-slot-label{font-size:12px;color:var(--text3);margin-top:6px;text-align:center;line-height:1.5}
-.img-slot .img-clear{position:absolute;top:5px;right:5px;background:var(--danger);color:#fff;border:none;border-radius:3px;width:20px;height:20px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700}
-.img-note{font-size:11px;color:var(--text3);grid-column:1/-1;line-height:1.5}
+.img-slot img{max-width:100%;max-height:100%;object-fit:contain}
+.img-slot .img-x{position:absolute;top:4px;right:4px;background:var(--danger);color:#fff;border:none;border-radius:3px;width:18px;height:18px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1}
+.img-slot-lbl{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.5}
+.img-note{font-size:11px;color:var(--text3);grid-column:1/-1;line-height:1.6}
 
-/* DATA TABLE */
+/* data table editor */
 .dt-wrap{overflow-x:auto}
-.dt{width:100%;border-collapse:collapse;font-size:13px}
-.dt th{background:var(--navy);color:#fff;padding:6px 9px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.dt td{padding:3px 5px;border-bottom:1px solid var(--cream2);vertical-align:middle}
+.dt{width:100%;border-collapse:collapse;font-size:12px}
+.dt th{background:var(--navy);color:#fff;padding:5px 8px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.dt td{padding:2px 4px;border-bottom:1px solid var(--cream2)}
 .dt tr:last-child td{border-bottom:none}
 .dt tr:hover td{background:var(--cream)}
-.dt input{border:1px solid transparent;border-radius:3px;padding:5px 6px;font-family:'Barlow',sans-serif;font-size:12px;width:100%;background:transparent;color:var(--text);transition:all .14s}
+.dt input{border:1px solid transparent;border-radius:3px;padding:4px 5px;font-family:'Barlow',sans-serif;font-size:12px;width:100%;background:transparent;color:var(--text);transition:all .13s}
 .dt input:hover{background:#fff;border-color:var(--border)}
 .dt input:focus{outline:none;background:#fff;border-color:var(--navy2)}
-.icon-del{background:none;border:none;cursor:pointer;padding:4px;border-radius:3px;color:var(--text3);display:flex;align-items:center;transition:all .14s;font-size:13px}
+.th-input{color:#fff!important;background:transparent!important;font-size:10px!important;border-color:transparent!important}
+.th-input:hover{background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.3)!important}
+.th-input:focus{background:rgba(255,255,255,.2)!important;border-color:rgba(255,255,255,.5)!important;outline:none}
+.icon-del{background:none;border:none;cursor:pointer;padding:3px;border-radius:3px;color:var(--text3);font-size:12px;display:flex;align-items:center;transition:all .13s}
 .icon-del:hover{background:var(--danger-bg);color:var(--danger)}
-.add-row{margin-top:9px;width:100%;background:var(--cream);border:1px dashed var(--border2);border-radius:var(--rad);padding:6px 12px;font-size:12px;font-family:'Barlow',sans-serif;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .14s}
+.add-row{margin-top:7px;width:100%;background:var(--cream);border:1px dashed var(--border2);border-radius:var(--rad);padding:5px 11px;font-size:12px;font-family:'Barlow',sans-serif;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .13s}
 .add-row:hover{background:var(--cream2);border-color:var(--navy2);color:var(--navy)}
+.row-btns{display:flex;gap:7px;margin-top:7px}
+.row-btns .add-row{margin-top:0}
 
-/* MODAL */
+/* ── MODAL ── */
 .modal-bg{position:fixed;inset:0;background:rgba(10,25,45,.5);z-index:300;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
-.modal{background:#fff;border-radius:var(--rad2);padding:22px;width:370px;box-shadow:var(--sh2);border:1px solid var(--border)}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--navy);letter-spacing:.03em;margin-bottom:14px}
-.modal-fields{display:flex;flex-direction:column;gap:11px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
-.btn-cancel{padding:7px 16px;border:1px solid var(--border);border-radius:var(--rad);background:#fff;cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;color:var(--text2)}
+.modal{background:#fff;border-radius:var(--rad2);padding:22px;width:370px;box-shadow:0 4px 24px rgba(15,38,64,.18);border:1px solid var(--border)}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--navy);margin-bottom:14px}
+.modal-fields{display:flex;flex-direction:column;gap:10px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:17px}
+.btn-cancel{padding:7px 15px;border:1px solid var(--border);border-radius:var(--rad);background:#fff;cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;color:var(--text2)}
 .btn-cancel:hover{background:var(--cream)}
-.btn-ok{padding:7px 20px;border:none;border-radius:var(--rad);background:var(--navy);color:#fff;cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600}
+.btn-ok{padding:7px 19px;border:none;border-radius:var(--rad);background:var(--navy);color:#fff;cursor:pointer;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600}
 .btn-ok:hover{background:var(--navy2)}
 
-/* ═══════════════════════════════════════
-   SPEC SHEET — matches the uploaded reference
-═══════════════════════════════════════ */
-.spec-wrap{background:var(--bg);border-radius:var(--rad2);padding:18px;overflow-x:auto}
+/* ══════════════════════════════════════════════════
+   SPEC SHEET — faithfully matches the reference PNG
+══════════════════════════════════════════════════ */
+.spec-wrap{background:var(--bg);border-radius:var(--rad2);padding:16px;overflow-x:auto}
+
 .spec{
   background:#fff;
-  width:1040px;
+  width:1060px;
   margin:0 auto;
-  border:1px solid #aaa;
+  border:1px solid #999;
   font-family:Arial,Helvetica,sans-serif;
-  font-size:11px;
   color:#111;
   display:flex;
   flex-direction:column;
+  font-size:10px;
 }
 
-/* TOP SECTION: image(s) left + tables right */
+/* TOP BAND: diagram(s) left | dims+notes right */
 .spec-top{
-  display:grid;
-  grid-template-columns:1fr 380px;
-  border-bottom:1px solid #999;
-  min-height:310px;
+  display:flex;
+  border-bottom:2px solid #666;
+  min-height:340px;
 }
-.spec-diagrams{
-  border-right:1px solid #999;
+
+/* LEFT: diagram image area */
+.spec-img-panel{
+  flex:1;
+  border-right:1px solid #aaa;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding:10px;
-  gap:8px;
-  background:#fff;
+  padding:10px 12px;
+  gap:6px;
+  background:#f0eff0;
+  position:relative;
 }
-.spec-diagrams img{
+.spec-img-panel img{
+  display:block;
   max-width:100%;
   object-fit:contain;
-  display:block;
 }
-.spec-diagrams.one-img img{ max-height:280px; }
-.spec-diagrams.two-imgs img{ max-height:135px; }
-.spec-diagrams-empty{
-  width:100%;height:100%;
+.spec-img-panel.one img{ max-height:310px; }
+.spec-img-panel.two img{ max-height:148px; }
+.spec-img-divider{ width:100%; border-top:1px dashed #bbb; }
+.spec-img-empty{
   display:flex;align-items:center;justify-content:center;
-  color:#bbb;font-size:13px;font-style:italic;
-  border:2px dashed #ddd;border-radius:4px;
-  margin:8px;
+  width:100%;height:100%;color:#bbb;font-size:12px;font-style:italic;
+  border:2px dashed #ccc;border-radius:4px;margin:8px;min-height:200px;
 }
 
+/* RIGHT: dims + notes stacked — same fixed width */
 .spec-right{
+  width:390px;
+  min-width:390px;
+  display:flex;
+  flex-direction:column;
+  border-left:none;
+}
+
+/* ── DIMENSIONS block ── */
+.spec-dims-block{
+  border-bottom:1px solid #aaa;
+  padding:7px 8px 6px;
+}
+.spec-block-title{
+  text-align:center;
+  font-size:11px;
+  font-weight:bold;
+  text-decoration:underline;
+  letter-spacing:.05em;
+  margin-bottom:5px;
+}
+
+/* Shared table: dims and notes use IDENTICAL column widths */
+/* col 0 = ITEM (44px), cols 1-5 = data cols (equal) */
+.spec-rt{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.spec-rt th, .spec-rt td{
+  border:1px solid #888;
+  padding:2px 3px;
+  text-align:center;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.spec-rt col.c-item{ width:44px; }
+.spec-rt col.c-data { width:1fr; }
+
+/* Dimension header row */
+.spec-rt thead.dim-head th{
+  background:#c8d4e8;
+  font-size:9px;
+  font-weight:bold;
+  line-height:1.3;
+}
+.spec-rt thead.dim-head th.item-hdr{
+  color:#cc0000;
+  font-weight:bold;
+}
+/* dimension data rows */
+.spec-rt tbody.dim-body td.item-cell{
+  color:#cc0000;
+  font-weight:bold;
+}
+.spec-rt tbody.dim-body td.hi{
+  background:#ffff88;
+  color:#cc0000;
+  font-weight:bold;
+}
+
+/* ── NOTES block ── */
+.spec-notes-block{
+  flex:1;
+  padding:7px 8px 4px;
   display:flex;
   flex-direction:column;
 }
+/* Notes header row — same bg as dims header */
+.spec-rt thead.note-head th{
+  background:#c8d4e8;
+  font-size:9px;
+  font-weight:bold;
+}
+.spec-rt thead.note-head th.code-hdr{
+  color:#0000cc;
+  font-weight:bold;
+  text-align:left;
+  padding-left:4px;
+}
+/* note data rows */
+.spec-rt tbody.note-body td.code-cell{
+  color:#0000cc;
+  font-weight:bold;
+  text-align:left;
+  padding-left:4px;
+}
+.spec-extra-note{
+  font-size:9px;
+  color:#cc0000;
+  font-style:italic;
+  text-align:right;
+  margin-top:5px;
+  padding-right:2px;
+}
 
-/* DIMENSIONS table */
-.spec-dims{padding:8px 10px;border-bottom:1px solid #999;flex-shrink:0}
-.spec-section-title{
+/* ── MATERIALS band ── */
+.spec-mats{
+  border-top:2px solid #666;
+  padding:5px 8px 7px;
+}
+.spec-mats-title{
   text-align:center;
-  font-size:12px;
+  font-size:11px;
   font-weight:bold;
   text-decoration:underline;
+  letter-spacing:.05em;
   margin-bottom:5px;
-  letter-spacing:.04em;
 }
-.spec-tbl{width:100%;border-collapse:collapse;font-size:10px}
-.spec-tbl th,.spec-tbl td{border:1px solid #888;padding:3px 5px;text-align:center}
-.spec-tbl th{background:#d0d8e4;font-weight:bold;font-size:9px}
-.spec-tbl td.item-col{font-weight:bold;color:#c00}
-.spec-tbl tr:nth-child(even) td{background:#f0f4f8}
-.spec-tbl td.hi{background:#ffff99;font-weight:bold;color:#c00}
+.spec-mt{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:10px;
+}
+.spec-mt col.mc-item{ width:40px; }
+.spec-mt col.mc-qty { width:38px; }
+.spec-mt col.mc-code{ width:110px; }
+.spec-mt col.mc-desc{ width:auto; }
 
-/* NOTES table */
-.spec-notes-box{padding:8px 10px;flex:1}
-.spec-notes-tbl{width:100%;border-collapse:collapse;font-size:10px}
-.spec-notes-tbl th,.spec-notes-tbl td{border:1px solid #888;padding:3px 5px;text-align:left}
-.spec-notes-tbl th{background:#d0d8e4;font-weight:bold;font-size:9px}
-.spec-notes-tbl td.code-col{font-weight:bold;color:#00c;white-space:nowrap}
-.extra-note{font-size:10px;color:#c00;font-style:italic;margin-top:6px;text-align:right}
+.spec-mt th{
+  background:#222;
+  color:#fff;
+  padding:3px 6px;
+  text-align:left;
+  font-size:9px;
+  font-weight:bold;
+  letter-spacing:.05em;
+  border:1px solid #555;
+}
+.spec-mt td{
+  padding:2px 6px;
+  border:1px solid #ccc;
+  vertical-align:top;
+}
+.spec-mt tr:nth-child(even) td{ background:#f6f6f6; }
+.spec-mt td.m-item{ font-weight:bold; color:#cc0000; text-align:center; }
+.spec-mt td.m-qty { text-align:center; }
+.spec-mt td.m-code-blue{ color:#0000cc; font-size:9px; }
+.spec-mt td.m-note{ color:#cc0000; font-size:9px; }
 
-/* MATERIALS */
-.spec-mats{padding:8px 10px 6px;border-top:1px solid #999}
-.spec-mats-tbl{width:100%;border-collapse:collapse;font-size:10px}
-.spec-mats-tbl th{background:#222;color:#fff;padding:4px 6px;text-align:left;font-size:9px;font-weight:bold;letter-spacing:.05em;border:1px solid #555}
-.spec-mats-tbl td{padding:3px 6px;border:1px solid #ccc;vertical-align:top}
-.spec-mats-tbl tr:nth-child(even) td{background:#f8f8f8}
-.spec-mats-tbl td.mat-item{font-weight:bold;color:#c00;text-align:center}
-.spec-mats-tbl td.mat-code{color:#00c;font-size:9px}
-.spec-mats-tbl td.mat-note{color:#c00;font-size:9px}
-
-/* FOOTER BANNER */
+/* ── FOOTER BANNER ── */
 .spec-footer{
-  background:#f5f5f5;
-  border-top:2px solid #999;
+  background:#f0eeea;
+  border-top:2px solid #888;
   display:flex;
   align-items:stretch;
-  min-height:72px;
+  min-height:78px;
 }
 .spec-footer-left{
   flex:1;
@@ -233,52 +338,65 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   flex-direction:column;
   justify-content:center;
   padding:8px 18px;
-  border-right:1px solid #999;
+  border-right:1px solid #aaa;
 }
-.spec-series-name{
-  font-family:'Barlow Condensed',Arial,sans-serif;
-  font-size:22px;
+.spec-series-script{
+  font-family:'Dancing Script','Barlow Condensed',cursive;
+  font-size:26px;
   font-weight:700;
-  font-style:italic;
   color:#111;
-  letter-spacing:.03em;
+  letter-spacing:.02em;
+  line-height:1.2;
 }
-.spec-subtitle{font-size:11px;color:#333;margin-top:3px;font-style:italic}
+.spec-subtitle{
+  font-size:10px;
+  color:#333;
+  font-style:italic;
+  margin-top:3px;
+  line-height:1.4;
+}
 .spec-footer-mid{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:8px 16px;
-  border-right:1px solid #999;
-  gap:4px;
-}
-.spec-page-label{font-size:9px;font-weight:bold;color:#555;letter-spacing:.06em;text-transform:uppercase}
-.spec-page-val{font-size:13px;font-weight:bold;color:#111}
-.spec-footer-right{
-  width:180px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   padding:8px 14px;
+  border-right:1px solid #aaa;
   gap:2px;
+  min-width:70px;
 }
-.spec-logo-area{max-width:140px;max-height:52px;object-fit:contain}
-.spec-logo-placeholder{font-family:'Barlow Condensed',Arial,sans-serif;font-size:20px;font-weight:700;font-style:italic;color:#333;text-align:center}
-.spec-website{font-size:9px;color:#555;text-align:center}
-.spec-year{font-size:9px;color:#999;position:absolute;bottom:5px;right:8px}
+.spec-page-lbl{ font-size:8px; font-weight:bold; color:#555; letter-spacing:.07em; text-transform:uppercase; }
+.spec-page-val{ font-size:13px; font-weight:bold; color:#111; }
+.spec-footer-right{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:8px 16px;
+  gap:2px;
+  min-width:170px;
+  position:relative;
+}
+.spec-logo-img{ max-width:140px; max-height:52px; object-fit:contain; }
+.spec-logo-script{
+  font-family:'Dancing Script',cursive;
+  font-size:28px;
+  font-weight:700;
+  color:#111;
+}
+.spec-website{ font-size:8px; color:#555; }
+.spec-year{ font-size:8px; color:#aaa; position:absolute; bottom:4px; right:6px; }
 
-/* PRINT */
+/* ── PRINT ── */
 @media print{
   body{overflow:visible!important;height:auto!important;background:#fff!important}
   .app-bar,.sidebar,.toolbar{display:none!important}
   .app-body{display:block}
   .main{display:block;overflow:visible}
   .content{padding:0;overflow:visible}
-  .spec-wrap{padding:0;background:none}
-  .spec{width:100%!important;box-shadow:none!important;border:1px solid #999!important}
-  @page{size:landscape;margin:12mm}
+  .spec-wrap{padding:0;background:none;border-radius:0}
+  .spec{width:100%!important;box-shadow:none!important;border:1px solid #888!important}
+  @page{size:landscape;margin:10mm}
 }
 </style>
 </head>
@@ -286,15 +404,13 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 
 <div class="app-bar">
   <div class="app-logo">🏗 Fence<em>Spec</em> Pro</div>
-  <div class="app-divider"></div>
+  <div class="app-div"></div>
   <div class="app-sub">Spec Sheet Generator</div>
   <div class="spacer"></div>
   <button class="app-btn gold" id="globalPrint" onclick="doPrint()" style="display:none">🖨 Print / Save PDF</button>
 </div>
 
 <div class="app-body">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sb-head">
       <div class="sb-label">🏗 Fence Styles</div>
@@ -306,13 +422,12 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
     <div class="style-list" id="styleList"></div>
     <div class="sb-foot">
       <button class="btn-new" onclick="openModal()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
         New Fence Style
       </button>
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="toolbar" id="toolbar" style="display:none">
       <div class="toolbar-name" id="toolbarName"></div>
@@ -323,12 +438,11 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
       <button class="btn btn-print" onclick="doPrint()">🖨 Print / PDF</button>
       <button class="btn btn-del" onclick="delStyle()">🗑 Delete</button>
     </div>
-
     <div class="content" id="mainContent">
       <div class="empty">
         <div class="empty-icon">🔩</div>
         <h2>No Style Selected</h2>
-        <p>Create a fence style and upload your diagrams to generate a printable spec sheet.</p>
+        <p>Create a fence style, upload your diagrams, and generate a printable spec sheet.</p>
         <button class="empty-cta" onclick="openModal()">+ Create First Style</button>
       </div>
     </div>
@@ -341,8 +455,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
     <div class="modal-title">New Fence Style</div>
     <div class="modal-fields">
       <div class="f"><label>Style Name</label><input id="mName" type="text" placeholder="e.g. Wood Illinois Scalloped" onkeydown="if(event.key==='Enter')doCreate()"/></div>
-      <div class="f"><label>Series</label><input id="mSeries" type="text" placeholder="e.g. Wood Illinois Scalloped Series" onkeydown="if(event.key==='Enter')doCreate()"/></div>
-      <div class="f"><label>Category / Code</label><input id="mCat" type="text" placeholder="e.g. WIL3" onkeydown="if(event.key==='Enter')doCreate()"/></div>
+      <div class="f"><label>Series (footer banner text)</label><input id="mSeries" type="text" placeholder="e.g. Wood Illinois Scalloped Series" onkeydown="if(event.key==='Enter')doCreate()"/></div>
+      <div class="f"><label>Page Code (e.g. WIL3)</label><input id="mCat" type="text" placeholder="e.g. WIL3" onkeydown="if(event.key==='Enter')doCreate()"/></div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
@@ -351,29 +465,67 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   </div>
 </div>
 
-<!-- Hidden file inputs -->
 <input type="file" id="imgInput1" accept="image/*" style="display:none" onchange="loadImg(1,event)"/>
 <input type="file" id="imgInput2" accept="image/*" style="display:none" onchange="loadImg(2,event)"/>
 <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="loadLogo(event)"/>
 
 <script>
 // ── STATE ──
-let S = JSON.parse(localStorage.getItem('fsp3_styles')||'[]');
-let cid = null, ctab = 'edit';
-let logo = localStorage.getItem('fsp3_logo')||null;
-let filt = '';
+let S = JSON.parse(localStorage.getItem('fsp4_styles')||'[]');
+let cid=null, ctab='edit';
+let logo=localStorage.getItem('fsp4_logo')||null;
+let filt='';
 
-function save(){ localStorage.setItem('fsp3_styles', JSON.stringify(S)); }
+function save(){ localStorage.setItem('fsp4_styles', JSON.stringify(S)); }
 function cur(){ return S.find(x=>x.id===cid); }
 function esc(v){ return String(v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+// Default template matching the reference PNG
+function defaultStyle(id,name,series,cat){
+  return {id,name,series,cat,
+    company:'Visions', website:'interstatevisions.com',
+    subtitle:'Pyramid Top Ease Edge spaced picket panel\nDouble Sided Panel',
+    extraNote:'Scalloped pickets are with 6" drop',
+    img1:null, img2:null,
+    // Dims: column headers (label + sub-label) and rows
+    // Number of data columns must match between dims and notes
+    numDataCols: 5,
+    dimColLabels:['wil5-3','N/A','wil4-3','N/A','wil3-3'],
+    dimColSubs:  ["5'H",   '',   "4'H",   '',   "3'H"],
+    dimRows:[
+      {item:'1', vals:['96"', '96"','84"','84"','72"'],  hiCols:[0,1,2,3]},
+      {item:'2', vals:['59.5"','53.5"','47.5"','41.5"','35.5"'], hiCols:[]},
+      {item:'3', vals:['38.5"','38.5"','32.5"','38.5"','32.5"'], hiCols:[]},
+      {item:'4', vals:['42.5"','36.5"','30.5"','24.5"','18.5"'], hiCols:[]},
+    ],
+    // Notes: same numDataCols columns
+    noteColLabels:['rc225','N/A','rc224','N/A','N/A'],
+    noteRows:[
+      {code:'C code', vals:['','','','','']},
+      {code:'C',      vals:['59.5"','53.5"','47.5"','41.5"','35.5"']},
+      {code:'C1',     vals:['','','','','']},
+      {code:'D code', vals:['','','','','']},
+    ],
+    materials:[
+      {item:'A',qty:'2', code:'RC148-IL,2S', desc:"1\"x4\"x96\" TOP RAIL DOUBLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",     codeBlue:false,descNote:false},
+      {item:'B',qty:'2', code:'RC148-IL1S',  desc:"1\"x4\"x96\" BOTTOM RAIL SINGLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",  codeBlue:false,descNote:false},
+      {item:'C',qty:'27',code:'See notes',   desc:"2X2 (1½\"x1½\") PYRAMID TOP EASE EDGE PICKET; D+BETTER CEDAR",                  codeBlue:true, descNote:true},
+      {item:'D',qty:'2', code:'N/A',         desc:'WOOD POSTS (For lengths see 1)',                                                   codeBlue:false,descNote:false},
+      {item:'E',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
+      {item:'F',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
+      {item:'G',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
+      {item:'H',qty:'62',code:'N/A',         desc:"2½\" Triple galvanized nail",                                                      codeBlue:false,descNote:false},
+    ]
+  };
+}
+
 // ── SIDEBAR ──
-function filterList(){ filt = document.getElementById('sbSearch').value.toLowerCase(); renderSB(); }
+function filterList(){ filt=document.getElementById('sbSearch').value.toLowerCase(); renderSB(); }
 function renderSB(){
-  const el = document.getElementById('styleList');
-  const vis = S.filter(s => s.name.toLowerCase().includes(filt)||(s.series||'').toLowerCase().includes(filt));
+  const el=document.getElementById('styleList');
+  const vis=S.filter(s=>s.name.toLowerCase().includes(filt)||(s.series||'').toLowerCase().includes(filt));
   if(!vis.length){ el.innerHTML='<div class="sb-empty">No styles yet.<br>Click "New Fence Style" below.</div>'; return; }
-  el.innerHTML = vis.map(s=>`
+  el.innerHTML=vis.map(s=>`
     <div class="style-item ${s.id===cid?'active':''}" onclick="pick('${s.id}')">
       <div class="si-icon">🔩</div>
       <div class="si-info">
@@ -401,43 +553,9 @@ function doCreate(){
   const series=document.getElementById('mSeries').value.trim();
   const cat=document.getElementById('mCat').value.trim();
   const id='s'+Date.now();
-  S.push({id, name, series, cat,
-    company:'Your Company', website:'www.yourcompany.com',
-    subtitle:'', extraNote:'', pageCode:'',
-    img1:null, img2:null,
-    dimCols:[
-      {label:'wil5-3', sub:'5\'H'},
-      {label:'N/A',    sub:''},
-      {label:'wil4-3', sub:'4\'H'},
-      {label:'N/A',    sub:''},
-      {label:'wil3-3', sub:'3\'H'}
-    ],
-    dimRows:[
-      {item:'1', vals:['96"','96"','84"','84"','72"']},
-      {item:'2', vals:['59.5"','53.5"','47.5"','41.5"','35.5"']},
-      {item:'3', vals:['38.5"','38.5"','32.5"','38.5"','32.5"']},
-      {item:'4', vals:['42.5"','36.5"','30.5"','24.5"','18.5"']},
-    ],
-    noteCols:[{label:'C code'},{label:'rc225'},{label:'N/A'},{label:'rc224'},{label:'N/A'},{label:'N/A'}],
-    noteRows:[
-      {code:'C',  vals:['59.5"','53.5"','47.5"','41.5"','35.5"']},
-      {code:'C1', vals:['','','','','']},
-      {code:'D code', vals:['','','','','']},
-    ],
-    materials:[
-      {item:'A',qty:'2',code:'RC148-IL,2S',desc:'1"x4"x96" TOP RAIL DOUBLE SIDED ROUND OVER (3/4"x3.5") D+BETTER CEDAR',noteFlag:false},
-      {item:'B',qty:'2',code:'RC148-IL1S',desc:'1"x4"x96" BOTTOM RAIL SINGLE SIDED ROUND OVER (3/4"x3.5") D+BETTER CEDAR',noteFlag:false},
-      {item:'C',qty:'27',code:'See notes',desc:'2X2 (1½"x1½") PYRAMID TOP EASE EDGE PICKET; D+BETTER CEDAR',noteFlag:true},
-      {item:'D',qty:'2',code:'N/A',desc:'WOOD POSTS (For lengths see 1)',noteFlag:false},
-      {item:'E',qty:'',code:'',desc:'',noteFlag:false},
-      {item:'F',qty:'',code:'',desc:'',noteFlag:false},
-      {item:'G',qty:'',code:'',desc:'',noteFlag:false},
-      {item:'H',qty:'62',code:'N/A',desc:'2½" Triple galvanized nail',noteFlag:false},
-    ]
-  });
+  S.push(defaultStyle(id,name,series||name,cat));
   save(); closeModal(); pick(id);
 }
-
 function delStyle(){
   if(!cid)return;
   if(!confirm(`Delete "${cur().name}"?`))return;
@@ -448,116 +566,140 @@ function delStyle(){
 }
 
 // ── TABS ──
-function goTab(t){
-  ctab=t;
-  document.getElementById('tEdit').classList.toggle('on',t==='edit');
-  document.getElementById('tPreview').classList.toggle('on',t==='preview');
-  if(t==='edit') renderEdit(); else renderPreview();
-}
+function goTab(t){ ctab=t; document.getElementById('tEdit').classList.toggle('on',t==='edit'); document.getElementById('tPreview').classList.toggle('on',t==='preview'); if(t==='edit')renderEdit();else renderPreview(); }
 
-// ── IMAGE HANDLING ──
-function loadImg(slot, e){
-  const f=e.target.files[0]; if(!f)return;
+// ── IMAGES ──
+function loadImg(slot,e){
+  const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=ev=>{
-    const t=cur(); if(!t)return;
-    t['img'+slot]=ev.target.result;
-    save();
-    if(ctab==='edit') renderEdit(); else renderPreview();
-  };
-  r.readAsDataURL(f);
-  e.target.value='';
+  r.onload=ev=>{ const t=cur();if(!t)return; t['img'+slot]=ev.target.result; save(); ctab==='edit'?renderEdit():renderPreview(); };
+  r.readAsDataURL(f); e.target.value='';
 }
-function clearImg(slot){
-  const t=cur(); if(!t)return;
-  t['img'+slot]=null; save();
-  if(ctab==='edit') renderEdit(); else renderPreview();
-}
+function clearImg(slot){ const t=cur();if(!t)return; t['img'+slot]=null; save(); ctab==='edit'?renderEdit():renderPreview(); }
 function loadLogo(e){
-  const f=e.target.files[0]; if(!f)return;
+  const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=ev=>{ logo=ev.target.result; localStorage.setItem('fsp3_logo',logo); if(ctab==='edit')renderEdit();else renderPreview(); };
-  r.readAsDataURL(f);
-  e.target.value='';
+  r.onload=ev=>{ logo=ev.target.result; localStorage.setItem('fsp4_logo',logo); ctab==='edit'?renderEdit():renderPreview(); };
+  r.readAsDataURL(f); e.target.value='';
 }
 
 // ── EDIT VIEW ──
 function renderEdit(){
-  const t=cur(); if(!t)return;
-  const img1Html = t.img1
-    ? `<div class="img-slot" style="cursor:default"><img src="${t.img1}" alt="Diagram 1"/><button class="img-clear" onclick="clearImg(1)" title="Remove">✕</button></div>`
-    : `<div class="img-slot" onclick="document.getElementById('imgInput1').click()"><span style="font-size:28px;opacity:.3">🖼</span><div class="img-slot-label">Click to upload<br/><b>Diagram Image 1</b></div></div>`;
-  const img2Html = t.img2
-    ? `<div class="img-slot" style="cursor:default"><img src="${t.img2}" alt="Diagram 2"/><button class="img-clear" onclick="clearImg(2)" title="Remove">✕</button></div>`
-    : `<div class="img-slot" onclick="document.getElementById('imgInput2').click()"><span style="font-size:28px;opacity:.3">🖼</span><div class="img-slot-label">Click to upload<br/><b>Diagram Image 2</b> (optional)</div></div>`;
+  const t=cur();if(!t)return;
+  const n=t.numDataCols||5;
+
+  // dim col header inputs
+  const dimHeadInputs = Array.from({length:n},(_,i)=>`
+    <th>
+      <input class="th-input" type="text" value="${esc(t.dimColLabels[i]||'')}" oninput="updDimColLabel(${i},this.value)" style="width:100%"/>
+      <input class="th-input" type="text" value="${esc(t.dimColSubs[i]||'')}" oninput="updDimColSub(${i},this.value)" style="width:100%;font-size:9px;margin-top:1px;opacity:.75"/>
+    </th>`).join('');
+
+  const dimRowsHtml = t.dimRows.map((r,ri)=>`
+    <tr>
+      <td><input type="text" value="${esc(r.item)}" oninput="updDimRowItem(${ri},this.value)" style="width:36px"/></td>
+      ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updDimVal(${ri},${j},this.value)"/></td>`).join('')}
+      <td><button class="icon-del" onclick="remDimRow(${ri})">✕</button></td>
+    </tr>`).join('');
+
+  // note col header inputs (same n cols)
+  const noteHeadInputs = Array.from({length:n},(_,i)=>`
+    <th><input class="th-input" type="text" value="${esc(t.noteColLabels[i]||'')}" oninput="updNoteColLabel(${i},this.value)" style="width:100%"/></th>`).join('');
+
+  const noteRowsHtml = t.noteRows.map((r,ri)=>`
+    <tr>
+      <td><input type="text" value="${esc(r.code)}" oninput="updNoteCode(${ri},this.value)" style="width:52px"/></td>
+      ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updNoteVal(${ri},${j},this.value)"/></td>`).join('')}
+      <td><button class="icon-del" onclick="remNoteRow(${ri})">✕</button></td>
+    </tr>`).join('');
+
+  const matRowsHtml = t.materials.map((m,mi)=>`
+    <tr>
+      <td><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)" style="width:30px"/></td>
+      <td><input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)" style="width:36px"/></td>
+      <td><input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)" style="width:90px"/>
+          <label style="font-size:10px;color:#0000cc;display:flex;align-items:center;gap:3px;margin-top:2px"><input type="checkbox" ${m.codeBlue?'checked':''} onchange="updMat(${mi},'codeBlue',this.checked)"/> blue</label></td>
+      <td><input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
+          <label style="font-size:10px;color:#cc0000;display:flex;align-items:center;gap:3px;margin-top:2px"><input type="checkbox" ${m.descNote?'checked':''} onchange="updMat(${mi},'descNote',this.checked)"/> +see notes</label></td>
+      <td><button class="icon-del" onclick="remMat(${mi})">✕</button></td>
+    </tr>`).join('');
+
+  const img1Html=t.img1
+    ?`<div class="img-slot" style="cursor:default"><img src="${t.img1}" alt="Diagram 1"/><button class="img-x" onclick="clearImg(1)">✕</button></div>`
+    :`<div class="img-slot" onclick="document.getElementById('imgInput1').click()"><span style="font-size:26px;opacity:.25">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 1</b></div></div>`;
+  const img2Html=t.img2
+    ?`<div class="img-slot" style="cursor:default"><img src="${t.img2}" alt="Diagram 2"/><button class="img-x" onclick="clearImg(2)">✕</button></div>`
+    :`<div class="img-slot" onclick="document.getElementById('imgInput2').click()"><span style="font-size:26px;opacity:.25">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 2</b> (optional)</div></div>`;
 
   document.getElementById('mainContent').innerHTML=`
     <div class="fsec">
       <div class="fsec-title">🏢 Company & Style Info</div>
       <div class="fg">
-        <div class="f"><label>Company Name</label><input type="text" value="${esc(t.company)}" oninput="u('company',this.value)"/></div>
+        <div class="f"><label>Company / Brand Name</label><input type="text" value="${esc(t.company)}" oninput="u('company',this.value)"/></div>
         <div class="f"><label>Website</label><input type="text" value="${esc(t.website)}" oninput="u('website',this.value)"/></div>
         <div class="f"><label>Style Name</label><input type="text" value="${esc(t.name)}" oninput="u('name',this.value)"/></div>
-        <div class="f"><label>Series Name (footer banner)</label><input type="text" value="${esc(t.series)}" oninput="u('series',this.value)"/></div>
-        <div class="f"><label>Subtitle (e.g. Pyramid Top...)</label><input type="text" value="${esc(t.subtitle)}" oninput="u('subtitle',this.value)"/></div>
+        <div class="f"><label>Series (footer script text)</label><input type="text" value="${esc(t.series)}" oninput="u('series',this.value)"/></div>
         <div class="f"><label>Page Code (e.g. WIL3)</label><input type="text" value="${esc(t.cat)}" oninput="u('cat',this.value)"/></div>
-        <div class="f full"><label>Extra Note (shown in red, top right)</label><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)" placeholder="e.g. Scalloped pickets are with 6&quot; drop"/></div>
+        <div class="f"><label>Extra Note (red italic, bottom-right)</label><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)"/></div>
+        <div class="f full"><label>Subtitle (footer, italic — use \\n for line break)</label><textarea oninput="u('subtitle',this.value)">${esc(t.subtitle)}</textarea></div>
       </div>
     </div>
 
     <div class="fsec">
-      <div class="fsec-title">🖼 Diagram Images (shown on spec sheet)</div>
-      <div class="img-upload-grid">
+      <div class="fsec-title">🖼 Diagram Images</div>
+      <div class="img-grid">
         ${img1Html}
         ${img2Html}
-        <div class="img-note">• Upload 1 image → fills the full left panel at full size<br>• Upload 2 images → both stack side-by-side, auto-scaled to fit<br>• Use your actual fence drawings/diagrams (PNG, JPG, etc.)</div>
+        <div class="img-note">• 1 image → fills full left panel &nbsp;•&nbsp; 2 images → stacked, equal height<br>Upload your actual fence drawing/diagram (PNG, JPG, PDF screenshot, etc.)</div>
       </div>
     </div>
 
     <div class="fsec">
       <div class="fsec-title">🏛 Company Logo (footer)</div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <div class="img-slot" style="width:200px;min-height:70px" onclick="document.getElementById('logoInput').click()">
-          ${logo?`<img src="${logo}" alt="logo" style="max-height:60px"/>`:'<div class="img-slot-label">Click to upload logo</div>'}
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="img-slot" style="width:190px;min-height:65px" onclick="document.getElementById('logoInput').click()">
+          ${logo?`<img src="${logo}" alt="logo" style="max-height:55px"/>`:'<div class="img-slot-lbl">Click to upload logo</div>'}
         </div>
-        ${logo?`<button class="btn" onclick="logo=null;localStorage.removeItem('fsp3_logo');renderEdit()">Remove Logo</button>`:''}
+        ${logo?`<button class="btn" onclick="logo=null;localStorage.removeItem('fsp4_logo');renderEdit()">✕ Remove</button>`:''}
       </div>
     </div>
 
     <div class="fsec">
-      <div class="fsec-title">📏 Dimensions Table</div>
-      <p style="font-size:11px;color:var(--text3);margin-bottom:10px">Edit column headers and dimension values below.</p>
+      <div class="fsec-title">📏 Dimensions Table
+        <span style="margin-left:auto;font-size:11px;font-weight:400;color:var(--text3)">${n} data columns (shared with Notes)</span>
+      </div>
+      <p style="font-size:11px;color:var(--text3);margin-bottom:9px">Column count is shared with the Notes table — adding/removing columns here affects both.</p>
       <div class="dt-wrap">
         <table class="dt">
           <thead><tr>
             <th style="width:44px">Item</th>
-            ${(t.dimCols||[]).map((_,i)=>`<th><input type="text" value="${esc(t.dimCols[i].label)}" oninput="updDimCol(${i},'label',this.value)" style="color:#fff;background:transparent;font-size:10px"/><br/><input type="text" value="${esc(t.dimCols[i].sub)}" oninput="updDimCol(${i},'sub',this.value)" style="color:rgba(255,255,255,.65);background:transparent;font-size:9px"/></th>`).join('')}
-            <th style="width:30px"></th>
+            ${dimHeadInputs}
+            <th style="width:28px"></th>
           </tr></thead>
-          <tbody id="dimBody">${renderDimRows(t)}</tbody>
+          <tbody id="dimBody">${dimRowsHtml}</tbody>
         </table>
       </div>
-      <div style="display:flex;gap:8px;margin-top:8px">
+      <div class="row-btns">
         <button class="add-row" style="flex:1" onclick="addDimRow()">+ Add Row</button>
-        <button class="add-row" style="flex:1" onclick="addDimCol()">+ Add Column</button>
+        <button class="add-row" style="flex:1" onclick="addCol()">+ Add Column (both tables)</button>
+        <button class="add-row" style="flex:1" onclick="removeCol()">− Remove Last Column</button>
       </div>
     </div>
 
     <div class="fsec">
-      <div class="fsec-title">📝 Notes Table</div>
+      <div class="fsec-title">📝 Notes Table <span style="margin-left:auto;font-size:11px;font-weight:400;color:var(--text3)">${n} data columns</span></div>
       <div class="dt-wrap">
         <table class="dt">
           <thead><tr>
             <th style="width:64px">Code</th>
-            ${(t.noteCols||[]).map((c,i)=>`<th><input type="text" value="${esc(c.label)}" oninput="updNoteCol(${i},this.value)" style="color:#fff;background:transparent;font-size:10px"/></th>`).join('')}
-            <th style="width:30px"></th>
+            ${noteHeadInputs}
+            <th style="width:28px"></th>
           </tr></thead>
-          <tbody id="noteBody">${renderNoteRows(t)}</tbody>
+          <tbody id="noteBody">${noteRowsHtml}</tbody>
         </table>
       </div>
-      <div style="display:flex;gap:8px;margin-top:8px">
+      <div class="row-btns">
         <button class="add-row" style="flex:1" onclick="addNoteRow()">+ Add Row</button>
-        <button class="add-row" style="flex:1" onclick="addNoteCol()">+ Add Column</button>
       </div>
     </div>
 
@@ -566,14 +708,13 @@ function renderEdit(){
       <div class="dt-wrap">
         <table class="dt">
           <thead><tr>
-            <th style="width:40px">Item</th>
-            <th style="width:50px">Qty</th>
-            <th style="width:100px">Code</th>
+            <th style="width:38px">Item</th>
+            <th style="width:42px">Qty</th>
+            <th style="width:130px">Code</th>
             <th>Description</th>
-            <th style="width:70px">Note Flag</th>
-            <th style="width:30px"></th>
+            <th style="width:28px"></th>
           </tr></thead>
-          <tbody id="matBody">${renderMatRows(t)}</tbody>
+          <tbody id="matBody">${matRowsHtml}</tbody>
         </table>
       </div>
       <button class="add-row" onclick="addMatRow()">+ Add Material Row</button>
@@ -581,148 +722,173 @@ function renderEdit(){
   `;
 }
 
+// ── FIELD UPDATERS ──
 function u(k,v){ const t=cur();if(!t)return;t[k]=v;save();if(k==='name'){document.getElementById('toolbarName').textContent=v;renderSB();} }
-function updDimCol(i,k,v){ const t=cur();if(t&&t.dimCols[i]){t.dimCols[i][k]=v;save();} }
-function updDimRow(i,j,v){ const t=cur();if(t&&t.dimRows[i]){t.dimRows[i].vals[j]=v;save();} }
+function updDimColLabel(i,v){ const t=cur();if(t){t.dimColLabels[i]=v;save();} }
+function updDimColSub(i,v){ const t=cur();if(t){t.dimColSubs[i]=v;save();} }
 function updDimRowItem(i,v){ const t=cur();if(t&&t.dimRows[i]){t.dimRows[i].item=v;save();} }
-function updNoteCol(i,v){ const t=cur();if(t&&t.noteCols[i]){t.noteCols[i].label=v;save();} }
-function updNoteRowCode(i,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].code=v;save();} }
-function updNoteRowVal(i,j,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].vals[j]=v;save();} }
+function updDimVal(i,j,v){ const t=cur();if(t&&t.dimRows[i]){t.dimRows[i].vals[j]=v;save();} }
+function updNoteColLabel(i,v){ const t=cur();if(t){t.noteColLabels[i]=v;save();} }
+function updNoteCode(i,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].code=v;save();} }
+function updNoteVal(i,j,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].vals[j]=v;save();} }
 function updMat(i,k,v){ const t=cur();if(t&&t.materials[i]){t.materials[i][k]=v;save();} }
 
-function renderDimRows(t){
-  return (t.dimRows||[]).map((r,i)=>`
-    <tr>
-      <td><input type="text" value="${esc(r.item)}" oninput="updDimRowItem(${i},this.value)" style="width:36px"/></td>
-      ${(t.dimCols||[]).map((_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updDimRow(${i},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remDimRow(${i})">✕</button></td>
-    </tr>`).join('');
-}
-function renderNoteRows(t){
-  return (t.noteRows||[]).map((r,i)=>`
-    <tr>
-      <td><input type="text" value="${esc(r.code)}" oninput="updNoteRowCode(${i},this.value)" style="width:56px"/></td>
-      ${(t.noteCols||[]).map((_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updNoteRowVal(${i},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remNoteRow(${i})">✕</button></td>
-    </tr>`).join('');
-}
-function renderMatRows(t){
-  return (t.materials||[]).map((m,i)=>`
-    <tr>
-      <td><input type="text" value="${esc(m.item)}" oninput="updMat(${i},'item',this.value)" style="width:32px"/></td>
-      <td><input type="text" value="${esc(m.qty)}" oninput="updMat(${i},'qty',this.value)" style="width:40px"/></td>
-      <td><input type="text" value="${esc(m.code)}" oninput="updMat(${i},'code',this.value)" style="width:88px"/></td>
-      <td><input type="text" value="${esc(m.desc)}" oninput="updMat(${i},'desc',this.value)"/></td>
-      <td style="text-align:center"><input type="checkbox" ${m.noteFlag?'checked':''} onchange="updMat(${i},'noteFlag',this.checked)" title="Mark code as 'See Notes' in blue"/></td>
-      <td><button class="icon-del" onclick="remMat(${i})">✕</button></td>
-    </tr>`).join('');
-}
-
-function addDimRow(){ const t=cur();if(!t)return; t.dimRows.push({item:String(t.dimRows.length+1),vals:t.dimCols.map(()=>'')}); save();renderEdit(); }
+function addDimRow(){ const t=cur();if(!t)return; t.dimRows.push({item:String(t.dimRows.length+1),vals:Array(t.numDataCols).fill(''),hiCols:[]}); save();renderEdit(); }
 function remDimRow(i){ const t=cur();if(t){t.dimRows.splice(i,1);save();renderEdit();} }
-function addDimCol(){ const t=cur();if(!t)return; t.dimCols.push({label:'',sub:''}); t.dimRows.forEach(r=>r.vals.push('')); save();renderEdit(); }
-function addNoteRow(){ const t=cur();if(!t)return; t.noteRows.push({code:'',vals:t.noteCols.map(()=>'')}); save();renderEdit(); }
+function addNoteRow(){ const t=cur();if(!t)return; t.noteRows.push({code:'',vals:Array(t.numDataCols).fill('')}); save();renderEdit(); }
 function remNoteRow(i){ const t=cur();if(t){t.noteRows.splice(i,1);save();renderEdit();} }
-function addNoteCol(){ const t=cur();if(!t)return; t.noteCols.push({label:''}); t.noteRows.forEach(r=>r.vals.push('')); save();renderEdit(); }
-function addMatRow(){ const t=cur();if(!t)return; const items='ABCDEFGH'; t.materials.push({item:items[t.materials.length]||'',qty:'',code:'',desc:'',noteFlag:false}); save();renderEdit(); }
+function addCol(){
+  const t=cur();if(!t)return;
+  t.numDataCols=(t.numDataCols||5)+1;
+  t.dimColLabels.push(''); t.dimColSubs.push('');
+  t.dimRows.forEach(r=>r.vals.push(''));
+  t.noteColLabels.push('');
+  t.noteRows.forEach(r=>r.vals.push(''));
+  save();renderEdit();
+}
+function removeCol(){
+  const t=cur();if(!t||t.numDataCols<=1)return;
+  t.numDataCols--;
+  t.dimColLabels.pop(); t.dimColSubs.pop();
+  t.dimRows.forEach(r=>r.vals.pop());
+  t.noteColLabels.pop();
+  t.noteRows.forEach(r=>r.vals.pop());
+  save();renderEdit();
+}
+function addMatRow(){
+  const t=cur();if(!t)return;
+  const items='ABCDEFGHIJKLMNOP';
+  t.materials.push({item:items[t.materials.length]||'',qty:'',code:'',desc:'',codeBlue:false,descNote:false});
+  save();renderEdit();
+}
 function remMat(i){ const t=cur();if(t){t.materials.splice(i,1);save();renderEdit();} }
 
 // ── PREVIEW ──
 function renderPreview(){
-  const t=cur(); if(!t)return;
+  const t=cur();if(!t)return;
+  const n=t.numDataCols||5;
   const hasImg1=!!t.img1, hasImg2=!!t.img2;
-  const imgClass = (hasImg1&&hasImg2)?'two-imgs':(hasImg1||hasImg2)?'one-img':'';
 
-  let diagHtml='';
-  if(!hasImg1&&!hasImg2){
-    diagHtml=`<div class="spec-diagrams-empty">Upload diagram images in Edit tab</div>`;
-  } else if(hasImg1&&hasImg2){
-    diagHtml=`
-      <img src="${t.img1}" alt="Diagram 1" style="max-width:100%;max-height:140px;object-fit:contain"/>
-      <div style="width:100%;border-top:1px dashed #ccc"></div>
-      <img src="${t.img2}" alt="Diagram 2" style="max-width:100%;max-height:140px;object-fit:contain"/>`;
-  } else {
-    diagHtml=`<img src="${t.img1||t.img2}" alt="Diagram" style="max-width:100%;max-height:290px;object-fit:contain"/>`;
-  }
+  // colgroup for consistent column widths across dims and notes
+  // col 0 = item (44px fixed), remaining n cols = equal share
+  const colGroup=`<colgroup><col class="c-item"/>${Array(n).fill('<col class="c-data"/>').join('')}</colgroup>`;
 
-  // Dimensions table
-  const dimHead = `<tr><th class="spec-tbl" style="background:#d0d8e4">ITEM</th>${(t.dimCols||[]).map(c=>`<th>${esc(c.label)}<br/><span style="font-size:8px;font-weight:normal">${esc(c.sub)}</span></th>`).join('')}</tr>`;
-  const dimBody = (t.dimRows||[]).map((r,ri)=>`
-    <tr>
-      <td class="item-col ${ri===0?'hi':''}">${esc(r.item)}</td>
-      ${(t.dimCols||[]).map((_,j)=>`<td class="${ri===0&&j<2?'hi':''}">${esc((r.vals||[])[j]||'')}</td>`).join('')}
-    </tr>`).join('');
+  // Dims table
+  const dimHead=`
+    <thead class="dim-head">
+      <tr>
+        <th class="item-hdr">ITEM</th>
+        ${Array.from({length:n},(_,i)=>`<th>${esc(t.dimColLabels[i]||'')}<br/><span style="font-weight:normal;font-size:8px">${esc(t.dimColSubs[i]||'')}</span></th>`).join('')}
+      </tr>
+    </thead>`;
+  const dimBody=`
+    <tbody class="dim-body">
+      ${t.dimRows.map((r,ri)=>`
+        <tr>
+          <td class="item-cell ${ri===0?'hi':''}">${esc(r.item)}</td>
+          ${Array.from({length:n},(_,j)=>`<td class="${ri===0?'hi':''}">${esc((r.vals||[])[j]||'')}</td>`).join('')}
+        </tr>`).join('')}
+    </tbody>`;
 
   // Notes table
-  const noteHead = `<tr><th>Code</th>${(t.noteCols||[]).map(c=>`<th>${esc(c.label)}</th>`).join('')}</tr>`;
-  const noteBody = (t.noteRows||[]).map(r=>`
-    <tr>
-      <td class="code-col">${esc(r.code)}</td>
-      ${(t.noteCols||[]).map((_,j)=>`<td>${esc((r.vals||[])[j]||'')}</td>`).join('')}
-    </tr>`).join('');
+  const noteHead=`
+    <thead class="note-head">
+      <tr>
+        <th class="code-hdr">Code</th>
+        ${Array.from({length:n},(_,i)=>`<th>${esc(t.noteColLabels[i]||'')}</th>`).join('')}
+      </tr>
+    </thead>`;
+  const noteBody=`
+    <tbody class="note-body">
+      ${t.noteRows.map(r=>`
+        <tr>
+          <td class="code-cell">${esc(r.code)}</td>
+          ${Array.from({length:n},(_,j)=>`<td>${esc((r.vals||[])[j]||'')}</td>`).join('')}
+        </tr>`).join('')}
+    </tbody>`;
 
   // Materials
-  const matRows = (t.materials||[]).map(m=>`
+  const matRows=t.materials.map(m=>`
     <tr>
-      <td class="mat-item">${esc(m.item)}</td>
-      <td style="text-align:center">${esc(m.qty)}</td>
-      <td class="${m.noteFlag?'mat-note':''}">${esc(m.code)}</td>
-      <td>${esc(m.desc)}${m.noteFlag?` <span class="mat-note">(See Notes)</span>`:''}</td>
+      <td class="m-item">${esc(m.item)}</td>
+      <td class="m-qty">${esc(m.qty)}</td>
+      <td class="${m.codeBlue?'m-code-blue':''}">${esc(m.code)}</td>
+      <td>${esc(m.desc)}${m.descNote?' <span style="color:#cc0000">(See Notes)</span>':''}</td>
     </tr>`).join('');
 
-  const footerLogo = logo
-    ? `<img src="${logo}" alt="logo" class="spec-logo-area"/>`
-    : `<div class="spec-logo-placeholder">${esc(t.company||'Logo')}</div>`;
+  // Img panel
+  let imgHtml='';
+  const imgClass=hasImg1&&hasImg2?'two':hasImg1||hasImg2?'one':'';
+  if(!hasImg1&&!hasImg2){
+    imgHtml=`<div class="spec-img-empty">Upload diagram images in Edit tab</div>`;
+  } else if(hasImg1&&hasImg2){
+    imgHtml=`<img src="${t.img1}" alt="Diagram 1"/><div class="spec-img-divider"></div><img src="${t.img2}" alt="Diagram 2"/>`;
+  } else {
+    imgHtml=`<img src="${t.img1||t.img2}" alt="Diagram"/>`;
+  }
+
+  // Logo / company in footer
+  const footerRight = logo
+    ? `<img src="${logo}" alt="logo" class="spec-logo-img"/><div class="spec-website">${esc(t.website||'')}</div>`
+    : `<div class="spec-logo-script">${esc(t.company||'')}</div><div class="spec-website">${esc(t.website||'')}</div>`;
+
+  const subtitleLines=(t.subtitle||'').split('\n').map(l=>esc(l)).join('<br/>');
 
   document.getElementById('mainContent').innerHTML=`
-    <div class="spec-wrap">
-      <div class="spec" id="theSpec">
+  <div class="spec-wrap">
+    <div class="spec" id="theSpec">
 
-        <div class="spec-top">
-          <div class="spec-diagrams ${imgClass}">${diagHtml}</div>
-          <div class="spec-right">
-            <div class="spec-dims">
-              <div class="spec-section-title">DIMENSIONS</div>
-              <table class="spec-tbl"><thead>${dimHead}</thead><tbody>${dimBody}</tbody></table>
-            </div>
-            <div class="spec-notes-box">
-              <div class="spec-section-title">Notes</div>
-              <table class="spec-notes-tbl"><thead>${noteHead}</thead><tbody>${noteBody}</tbody></table>
-              ${t.extraNote?`<div class="extra-note">${esc(t.extraNote)}</div>`:''}
-            </div>
+      <!-- TOP: image | dims+notes -->
+      <div class="spec-top">
+        <div class="spec-img-panel ${imgClass}">${imgHtml}</div>
+
+        <div class="spec-right">
+          <!-- DIMENSIONS -->
+          <div class="spec-dims-block">
+            <div class="spec-block-title">DIMENSIONS</div>
+            <table class="spec-rt">${colGroup}${dimHead}${dimBody}</table>
+          </div>
+          <!-- NOTES -->
+          <div class="spec-notes-block">
+            <div class="spec-block-title">Notes</div>
+            <table class="spec-rt">${colGroup}${noteHead}${noteBody}</table>
+            ${t.extraNote?`<div class="spec-extra-note">${esc(t.extraNote)}</div>`:''}
           </div>
         </div>
-
-        <div class="spec-mats">
-          <div class="spec-section-title" style="margin-bottom:6px">MATERIALS</div>
-          <table class="spec-mats-tbl">
-            <thead><tr>
-              <th style="width:40px">ITEM</th>
-              <th style="width:40px">QTY</th>
-              <th style="width:110px">CODE</th>
-              <th>DESCRIPTION</th>
-            </tr></thead>
-            <tbody>${matRows}</tbody>
-          </table>
-        </div>
-
-        <div class="spec-footer">
-          <div class="spec-footer-left">
-            <div class="spec-series-name">${esc(t.series||t.name||'')}</div>
-            <div class="spec-subtitle">${esc(t.subtitle||'')}</div>
-          </div>
-          <div class="spec-footer-mid">
-            <div class="spec-page-label">PAGE</div>
-            <div class="spec-page-val">${esc(t.cat||'—')}</div>
-          </div>
-          <div class="spec-footer-right">
-            ${footerLogo}
-            <div class="spec-website">${esc(t.website||'')}</div>
-          </div>
-        </div>
-
       </div>
-    </div>`;
+
+      <!-- MATERIALS -->
+      <div class="spec-mats">
+        <div class="spec-mats-title">MATERIALS</div>
+        <table class="spec-mt">
+          <colgroup>
+            <col class="mc-item"/><col class="mc-qty"/><col class="mc-code"/><col class="mc-desc"/>
+          </colgroup>
+          <thead><tr>
+            <th>ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th>
+          </tr></thead>
+          <tbody>${matRows}</tbody>
+        </table>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="spec-footer">
+        <div class="spec-footer-left">
+          <div class="spec-series-script">${esc(t.series||t.name||'')}</div>
+          <div class="spec-subtitle">${subtitleLines}</div>
+        </div>
+        <div class="spec-footer-mid">
+          <div class="spec-page-lbl">PAGE</div>
+          <div class="spec-page-val">${esc(t.cat||'—')}</div>
+        </div>
+        <div class="spec-footer-right">
+          ${footerRight}
+          <div class="spec-year">${new Date().getFullYear()}</div>
+        </div>
+      </div>
+
+    </div>
+  </div>`;
 }
 
 // ── PRINT ──
@@ -732,7 +898,6 @@ function doPrint(){
   window.print();
 }
 
-// ── INIT ──
 renderSB();
 </script>
 </body>
