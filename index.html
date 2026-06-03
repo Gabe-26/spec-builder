@@ -417,6 +417,28 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .spec-website{ font-size:9px; color:#555; }
 .spec-year{ font-size:8px; color:#aaa; position:absolute; bottom:3px; right:5px; }
 
+/* ── BANNER COLOR VARIANTS ── */
+/* Green — Wood Shop: angled right edge (ribbon flag) */
+.banner-green .spec-series-script{
+  background:linear-gradient(135deg,#1a5c2a 60%,#2d8a42 100%);
+  clip-path:polygon(0 0, 100% 0, 96% 100%, 0 100%);
+}
+/* Blue — Metal Shop: parallelogram (industrial slant) */
+.banner-blue .spec-series-script{
+  background:linear-gradient(135deg,#0f2640 60%,#1a3a5c 100%);
+  clip-path:polygon(3% 0, 100% 0, 97% 100%, 0 100%);
+}
+/* Pink — Gate Shop: arch/scallop top-right corner */
+.banner-pink .spec-series-script{
+  background:linear-gradient(135deg,#8c1a4a 60%,#c42d6e 100%);
+  clip-path:polygon(0 0, 92% 0, 100% 30%, 100% 100%, 0 100%);
+}
+/* Orange — Gear Shop: double-notch chevron */
+.banner-orange .spec-series-script{
+  background:linear-gradient(135deg,#7a3800 60%,#c45a00 100%);
+  clip-path:polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+}
+
 /* ── PRINT ── */
 @media print{
   body{overflow:visible!important;height:auto!important;background:#fff!important}
@@ -424,6 +446,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   .app-body{display:block}
   .main{display:block;overflow:visible}
   .content{padding:0;overflow:visible}
+  *{ -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important; }
   .spec-wrap{padding:0;background:none;border-radius:0}
   .spec{
     width:100%!important;
@@ -530,6 +553,7 @@ function defaultStyle(id,name,series,cat){
     company:'Visions', website:'interstatevisions.com',
     subtitle:'Pyramid Top Ease Edge spaced picket panel\nDouble Sided Panel',
     extraNote:'Scalloped pickets are with 6" drop',
+    banner:'blue',
     img1:null, img2:null,
     // Dims: column headers (label + sub-label) and rows
     // Number of data columns must match between dims and notes
@@ -684,6 +708,14 @@ function renderEdit(){
         <div class="f"><label>Style Name</label><input type="text" value="${esc(t.name)}" oninput="u('name',this.value)"/></div>
         <div class="f"><label>Series (footer script text)</label><input type="text" value="${esc(t.series)}" oninput="u('series',this.value)"/></div>
         <div class="f"><label>Page Code (e.g. WIL3)</label><input type="text" value="${esc(t.cat)}" oninput="u('cat',this.value)"/></div>
+        <div class="f"><label>Banner Color / Shop</label>
+          <select onchange="u('banner',this.value)">
+            <option value="green"  ${t.banner==='green' ?'selected':''}>🟢 Green — Wood Shop</option>
+            <option value="blue"   ${t.banner==='blue'  ?'selected':''}>🔵 Blue — Metal Shop</option>
+            <option value="pink"   ${t.banner==='pink'  ?'selected':''}>🩷 Pink — Gate Shop</option>
+            <option value="orange" ${t.banner==='orange'?'selected':''}>🟠 Orange — Gear Shop</option>
+          </select>
+        </div>
         <div class="f"><label>Extra Note (red italic, bottom-right)</label><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)"/></div>
         <div class="f full"><label>Subtitle (footer, italic — use \\n for line break)</label><textarea oninput="u('subtitle',this.value)">${esc(t.subtitle)}</textarea></div>
       </div>
@@ -886,7 +918,7 @@ function renderPreview(){
 
   document.getElementById('mainContent').innerHTML=`
   <div class="spec-wrap">
-    <div class="spec" id="theSpec">
+    <div class="spec banner-${t.banner||'blue'}" id="theSpec">
 
       <!-- TOP: image | dims+notes -->
       <div class="spec-top">
