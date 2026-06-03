@@ -732,7 +732,7 @@ function renderEdit(){
       <div class="dt-wrap">
         <table class="dt">
           <thead><tr>
-            <th style="width:64px">Code</th>
+            <th style="width:64px"><input class="th-input" type="text" value="${esc(t.noteFirstCol||'Code')}" oninput="u('noteFirstCol',this.value)" style="width:100%"/></th>
             ${noteHeadInputs}
             <th style="width:28px"></th>
           </tr></thead>
@@ -819,7 +819,7 @@ function renderPreview(){
     <thead class="dim-head">
       <tr>
         <th class="item-hdr">ITEM</th>
-        ${Array.from({length:n},(_,i)=>`<th>${esc(t.dimColLabels[i]||'')}<br/><span style="font-weight:normal;font-size:8px">${esc(t.dimColSubs[i]||'')}</span></th>`).join('')}
+        ${Array.from({length:n},(_,i)=>`<th>${esc(t.dimColLabels[i]||'')}<br/><span style="font-weight:normal;font-size:11px">${esc(t.dimColSubs[i]||'')}</span></th>`).join('')}
       </tr>
     </thead>`;
   const dimBody=`
@@ -835,7 +835,7 @@ function renderPreview(){
   const noteHead=`
     <thead class="note-head">
       <tr>
-        <th class="code-hdr">Code</th>
+        <th class="code-hdr">${esc(t.noteFirstCol||'Code')}</th>
         ${Array.from({length:n},(_,i)=>`<th>${esc(t.noteColLabels[i]||'')}</th>`).join('')}
       </tr>
     </thead>`;
