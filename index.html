@@ -147,6 +147,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   flex-direction:column;
   font-size:11px;
   font-weight:bold;
+  height:720px;
 }
 
 /* TOP BAND: diagram(s) left | dims+notes right */
@@ -154,7 +155,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   display:flex;
   border-bottom:2px solid #444;
   flex:1;
-  min-height:460px;
+  min-height:0;
+  overflow:hidden;
 }
 
 /* LEFT: diagram image area */
@@ -169,15 +171,18 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   gap:10px;
   background:#fff;
   position:relative;
+  overflow:hidden;
+  min-height:0;
 }
 .spec-img-panel img{
   display:block;
   object-fit:contain;
   flex:1;
   min-width:0;
+  max-height:100%;
 }
-.spec-img-panel.one img{ max-height:440px; max-width:100%; }
-.spec-img-panel.two img{ max-height:440px; max-width:50%; }
+.spec-img-panel.one img{ max-width:100%; }
+.spec-img-panel.two img{ max-width:50%; }
 .spec-img-divider{ height:100%; border-left:1px dashed #bbb; align-self:stretch; }
 .spec-img-empty{
   display:flex;align-items:center;justify-content:center;
@@ -296,6 +301,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .spec-mats{
   border-top:2px solid #444;
   padding:5px 7px 7px;
+  flex-shrink:0;
 }
 .spec-mats-title{
   text-align:center;
@@ -334,7 +340,8 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .spec-mt tr:nth-child(even) td{ background:#f6f6f6; }
 .spec-mt th.th-item{ color:#0000cc; }
 .spec-mt td.m-item{ font-weight:bold; color:#0000cc; text-align:center; }
-.spec-mt td.m-qty { text-align:center; }
+.spec-mt td.m-qty { text-align:center; white-space:normal; word-break:break-word; }
+.spec-mt td.m-qty-note{ text-align:center; color:#0000cc; font-size:11px; white-space:normal; word-break:break-word; }
 .spec-mt td.m-code{ text-align:center; }
 .spec-mt td.m-code-blue{ color:#0000cc; font-size:12px; text-align:center; }
 .spec-mt td.m-note{ color:#cc0000; font-size:12px; }
@@ -346,6 +353,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   display:flex;
   align-items:stretch;
   min-height:72px;
+  flex-shrink:0;
 }
 .spec-footer-left{
   flex:1;
@@ -447,23 +455,33 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   .main{display:block;overflow:visible}
   .content{padding:0;overflow:visible}
   *{ -webkit-print-color-adjust:exact!important; print-color-adjust:exact!important; }
-  .spec-wrap{padding:0;background:none;border-radius:0}
-  .spec{
-    width:100%!important;
-    min-height:0!important;
-    box-shadow:none!important;
-    border:2px solid #444!important;
-  }
   .spec-wrap{
+    padding:0;background:none;border-radius:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    min-height:100vh;
-    padding:0;
-    background:none;
-    border-radius:0;
   }
-  @page{size:11in 8.5in landscape;margin:5mm}
+  .spec{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    box-shadow:none!important;
+    border:2px solid #444!important;
+    font-size:10px!important;
+  }
+  .spec-top{ min-height:0!important; flex:1!important; }
+  .spec-footer{ min-height:58px!important; }
+  .spec-series-script{ font-size:28px!important; }
+  .spec-mt{ font-size:11px!important; }
+  .spec-mt th{ font-size:10px!important; padding:2px 4px!important; }
+  .spec-mt td{ padding:1px 4px!important; }
+  .spec-rt th,.spec-rt td{ padding:2px 2px!important; font-size:10px!important; }
+  .spec-block-title{ font-size:10px!important; margin-bottom:2px!important; }
+  .spec-mats{ padding:3px 7px 4px!important; }
+  .spec-mats-title{ margin-bottom:2px!important; }
+  .spec-dims-block{ padding:4px 6px 4px!important; }
+  .spec-notes-block{ padding:4px 6px 3px!important; }
+  @page{size:11in 8.5in landscape;margin:4mm}
 }
 </style>
 </head>
@@ -890,13 +908,16 @@ function renderPreview(){
     </tbody>`;
 
   // Materials
-  const matRows=t.materials.map(m=>`
+  const matRows=t.materials.map(m=>{
+    const qtyIsNote = m.qty.toLowerCase().includes('see');
+    return `
     <tr>
       <td class="m-item">${esc(m.item)}</td>
-      <td class="m-qty">${esc(m.qty)}</td>
+      <td class="${qtyIsNote?'m-qty-note':'m-qty'}">${esc(m.qty)}</td>
       <td class="${m.codeBlue?'m-code-blue':'m-code'}">${esc(m.code)}</td>
       <td>${esc(m.desc)}${m.descNote?' <span style="color:#cc0000">(See Notes)</span>':''}</td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 
   // Img panel
   let imgHtml='';
