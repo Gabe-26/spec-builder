@@ -206,7 +206,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   text-decoration:underline;
   letter-spacing:.05em;
   margin-bottom:4px;
+  text-transform:uppercase;
 }
+.spec-dims-title{ color:#cc0000; }
+.spec-notes-title{ color:#0000cc; }
 
 /* Shared table: dims and notes use IDENTICAL column widths */
 .spec-rt{
@@ -886,12 +889,12 @@ function renderPreview(){
         <div class="spec-right">
           <!-- DIMENSIONS -->
           <div class="spec-dims-block">
-            <div class="spec-block-title">DIMENSIONS</div>
+            <div class="spec-block-title spec-dims-title">DIMENSIONS</div>
             <table class="spec-rt">${colGroup}${dimHead}${dimBody}</table>
           </div>
           <!-- NOTES -->
           <div class="spec-notes-block">
-            <div class="spec-block-title">Notes</div>
+            <div class="spec-block-title spec-notes-title">NOTES</div>
             <table class="spec-rt">${colGroup}${noteHead}${noteBody}</table>
             ${t.extraNote?`<div class="spec-extra-note">${esc(t.extraNote)}</div>`:''}
           </div>
