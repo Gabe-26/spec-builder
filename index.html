@@ -347,25 +347,28 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .spec-footer-left{
   flex:1;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:6px 16px;
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  padding:6px 20px;
   border-right:2px solid #444;
+  gap:20px;
 }
 .spec-series-script{
   font-family:'Dancing Script','Barlow Condensed',cursive;
-  font-size:28px;
+  font-size:34px;
   font-weight:700;
   color:#111;
   letter-spacing:.02em;
   line-height:1.2;
+  white-space:nowrap;
 }
 .spec-subtitle{
   font-size:11px;
   color:#333;
   font-style:italic;
-  margin-top:2px;
-  line-height:1.4;
+  line-height:1.6;
+  text-align:right;
 }
 .spec-footer-mid{
   display:flex;
