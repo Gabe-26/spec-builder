@@ -388,8 +388,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   gap:2px;
   min-width:160px;
   position:relative;
+  background:#fff;
 }
-.spec-logo-img{ max-width:130px; max-height:52px; object-fit:contain; }
+.spec-logo-img{ max-width:160px; max-height:64px; object-fit:contain; background:transparent; }
 .spec-logo-script{
   font-family:'Dancing Script',cursive;
   font-size:28px;
@@ -676,7 +677,7 @@ function renderEdit(){
     <div class="fsec">
       <div class="fsec-title">🏛 Company Logo (footer)</div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="img-slot" style="width:190px;min-height:65px;background:#111" onclick="document.getElementById('logoInput').click()">
+        <div class="img-slot" style="width:190px;min-height:65px" onclick="document.getElementById('logoInput').click()">
           ${logo?`<img src="${logo}" alt="logo" style="max-height:55px"/>`:'<div class="img-slot-lbl" style="color:#aaa">Click to upload logo</div>'}
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
