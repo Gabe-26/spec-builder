@@ -329,8 +329,10 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   vertical-align:top;
 }
 .spec-mt tr:nth-child(even) td{ background:#f6f6f6; }
-.spec-mt td.m-item{ font-weight:bold; color:#cc0000; text-align:center; }
+.spec-mt th.th-item{ color:#0000cc; }
+.spec-mt td.m-item{ font-weight:bold; color:#0000cc; text-align:center; }
 .spec-mt td.m-qty { text-align:center; }
+.spec-mt td.m-code{ text-align:center; }
 .spec-mt td.m-code-blue{ color:#0000cc; font-size:12px; }
 .spec-mt td.m-note{ color:#cc0000; font-size:12px; }
 
@@ -829,7 +831,7 @@ function renderPreview(){
     <tr>
       <td class="m-item">${esc(m.item)}</td>
       <td class="m-qty">${esc(m.qty)}</td>
-      <td class="${m.codeBlue?'m-code-blue':''}">${esc(m.code)}</td>
+      <td class="${m.codeBlue?'m-code-blue':'m-code'}">${esc(m.code)}</td>
       <td>${esc(m.desc)}${m.descNote?' <span style="color:#cc0000">(See Notes)</span>':''}</td>
     </tr>`).join('');
 
@@ -882,7 +884,7 @@ function renderPreview(){
             <col class="mc-item"/><col class="mc-qty"/><col class="mc-code"/><col class="mc-desc"/>
           </colgroup>
           <thead><tr>
-            <th>ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th>
+            <th class="th-item">ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th>
           </tr></thead>
           <tbody>${matRows}</tbody>
         </table>
