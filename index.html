@@ -719,27 +719,17 @@ function importStyles(e){
   reader.onload = function(ev){
     try {
       const data = JSON.parse(ev.target.result);
-      // Support both raw array and wrapped export format
       const incoming = Array.isArray(data) ? data : (data.styles || []);
       if(!incoming.length){ alert('No styles found in this file.'); return; }
-      const action = confirm(
-        'Import ' + incoming.length + ' style(s) from "' + file.name + '"?
-
-' +
-        'Click OK to MERGE with your existing styles.
-' +
-        'Click Cancel to REPLACE everything with the imported file.'
-      );
+      const action = confirm('Import ' + incoming.length + ' style(s) from "' + file.name + '"? Click OK to MERGE with your existing styles, or Cancel to REPLACE everything.');
       if(action){
-        // Merge — add imported styles, skip any with matching IDs
-        const existingIds = new Set(S.map(s=>s.id));
+        const existingIds = new Set(S.map(function(s){ return s.id; }));
         let added = 0;
-        incoming.forEach(s=>{
+        incoming.forEach(function(s){
           if(!existingIds.has(s.id)){ S.push(s); added++; }
         });
         alert('Merged! Added ' + added + ' new style(s). ' + (incoming.length - added) + ' duplicate(s) skipped.');
       } else {
-        // Replace
         if(!confirm('This will DELETE all your current styles and replace them. Are you sure?')) return;
         S = incoming;
         cid = null;
@@ -747,7 +737,6 @@ function importStyles(e){
         document.getElementById('globalPrint').style.display='none';
         document.getElementById('mainContent').innerHTML='<div class="empty"><div class="empty-icon">🔩</div><h2>Styles Imported</h2><p>Select a style from the sidebar to start editing.</p></div>';
       }
-      // Restore logo if present
       if(!Array.isArray(data) && data.logo){
         logo = data.logo;
         localStorage.setItem('fsp4_logo', logo);
@@ -755,7 +744,7 @@ function importStyles(e){
       save();
       renderSB();
     } catch(err) {
-      alert('Could not read file. Make sure it's a valid FenceSpec export (.json).');
+      alert('Could not read file. Make sure it is a valid FenceSpec export (.json).');
     }
   };
   reader.readAsText(file);
