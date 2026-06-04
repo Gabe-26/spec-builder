@@ -487,6 +487,87 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   .spec-top{ min-height:0!important; flex:1!important; }
   @page{size:11in 8.5in landscape;margin:4mm}
 }
+
+/* ── MIRRORED EDIT LAYOUT ── */
+.edit-mirror{
+  background:#fff;border:2px solid #444;
+  font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;color:#111;
+  width:1050px;margin:0 auto;display:flex;flex-direction:column;
+}
+.edit-mirror-top{display:flex;border-bottom:2px solid #444;min-height:460px;}
+.edit-mirror-left{
+  flex:1;border-right:2px solid #444;display:flex;flex-direction:column;
+  padding:8px 10px;gap:8px;background:#fff;overflow:hidden;
+}
+.edit-mirror-left .img-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;}
+.edit-mirror-left .img-slot{min-height:200px;}
+.edit-mirror-right{width:290px;min-width:290px;display:flex;flex-direction:column;}
+.edit-mirror-dims{border-bottom:2px solid #444;padding:6px 7px;}
+.edit-mirror-notes{flex:1;padding:6px 7px;display:flex;flex-direction:column;}
+.em-block-title{text-align:center;font-size:12px;font-weight:bold;text-decoration:underline;letter-spacing:.05em;margin-bottom:4px;text-transform:uppercase;}
+.em-dims-title{color:#cc0000;}
+.em-notes-title{color:#0000cc;}
+.em-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px;}
+.em-table th,.em-table td{border:1px solid #888;padding:1px 2px;text-align:center;overflow:hidden;}
+.em-table col.ec-item{width:52px;}.em-table col.ec-data{width:auto;}
+.em-table thead th{background:#fff;font-size:10px;font-weight:bold;}
+.em-table thead th.em-item-hdr{color:#cc0000;}
+.em-table thead th.em-code-hdr{color:#0000cc;text-align:left;padding-left:3px;}
+.em-table tbody td{font-size:11px;}
+.em-table tbody td.em-item-cell{color:#cc0000;}
+.em-table tbody td.em-code-cell{color:#0000cc;text-align:left;padding-left:3px;}
+.em-table input{border:1px solid transparent;border-radius:2px;padding:2px 3px;font-family:Arial,sans-serif;font-size:10px;width:100%;background:transparent;color:inherit;font-weight:bold;transition:all .13s;}
+.em-table input:hover{background:#fffbe8;border-color:#ccc;}
+.em-table input:focus{outline:none;background:#fff;border-color:#0050cc;}
+.em-table th input{color:inherit;font-size:9px;background:transparent;border-color:transparent;}
+.em-table th input:hover{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.2);}
+.em-table th input:focus{background:rgba(0,0,0,.08);border-color:rgba(0,0,0,.4);outline:none;}
+.em-extra-note{font-size:9px;color:#cc0000;font-style:italic;text-align:right;margin-top:3px;}
+.em-extra-note input{font-size:9px;color:#cc0000;font-style:italic;background:transparent;border:1px solid transparent;width:100%;font-weight:normal;text-align:right;}
+.em-extra-note input:focus{background:#fff;border-color:#cc0000;outline:none;}
+.edit-mirror-mats{border-top:2px solid #444;padding:4px 7px 6px;}
+.edit-mirror-mats-title{text-align:center;font-size:12px;font-weight:bold;letter-spacing:.05em;margin-bottom:3px;}
+.em-mat-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px;}
+.em-mat-table col.mc2-item{width:36px;}.em-mat-table col.mc2-qty{width:58px;}.em-mat-table col.mc2-code{width:108px;}.em-mat-table col.mc2-desc{width:auto;}.em-mat-table col.mc2-del{width:20px;}
+.em-mat-table th{background:#fff;color:#000;padding:2px 4px;text-align:center;font-size:10px;font-weight:bold;letter-spacing:.04em;border:1px solid #aaa;}
+.em-mat-table th.th2-item{color:#0000cc;}
+.em-mat-table td{padding:1px 3px;border:1px solid #ccc;vertical-align:middle;height:20px;}
+.em-mat-table tr:nth-child(even) td{background:#f8f8f8;}
+.em-mat-table td.em2-item{color:#0000cc;font-weight:bold;text-align:center;}
+.em-mat-table td.em2-code-blue{color:#0000cc;font-size:10px;text-align:center;}
+.em-mat-table input{border:1px solid transparent;border-radius:2px;padding:1px 3px;font-family:Arial,sans-serif;font-size:10px;width:100%;background:transparent;color:inherit;font-weight:bold;transition:all .13s;}
+.em-mat-table input:hover{background:#fffbe8;border-color:#ccc;}
+.em-mat-table input:focus{outline:none;background:#fff;border-color:#0050cc;}
+.em-check-row{display:flex;align-items:center;gap:3px;font-size:9px;font-weight:normal;margin-top:1px;}
+.em-check-row input[type=checkbox]{width:10px;height:10px;}
+.edit-mirror-footer{background:#fff;border-top:2px solid #444;display:flex;align-items:stretch;min-height:70px;flex-shrink:0;}
+.em-footer-left{flex:1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:5px 16px;border-right:2px solid #444;gap:12px;}
+.em-series-script{font-family:'Dancing Script','Barlow Condensed',cursive;font-size:38px;font-weight:700;color:#fff;letter-spacing:.02em;background:linear-gradient(135deg,#0f2640 60%,#1a3a5c 100%);padding:5px 18px 5px 12px;border-radius:3px;box-shadow:2px 2px 5px rgba(0,0,0,.22);white-space:nowrap;clip-path:polygon(0 0,100% 0,96% 100%,0 100%);}
+.em-series-script input{font-family:'Dancing Script','Barlow Condensed',cursive;font-size:38px;font-weight:700;color:#fff;letter-spacing:.02em;background:transparent;border:none;outline:none;text-shadow:1px 1px 2px rgba(0,0,0,.35);min-width:100px;}
+.em-footer-right{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5px 12px;gap:2px;min-width:160px;}
+.em-footer-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5px 10px;border-right:2px solid #444;gap:1px;min-width:68px;}
+.em-page-lbl{font-size:8px;font-weight:bold;color:#555;letter-spacing:.07em;}
+.em-page-val input{font-size:13px;font-weight:bold;color:#111;text-align:center;background:transparent;border:1px solid transparent;width:60px;}
+.em-page-val input:focus{background:#fff;border-color:#0050cc;outline:none;}
+.em-subtitle-wrap{border:1px solid #aaa;padding:4px 8px;border-radius:3px;flex:1;}
+.em-subtitle-wrap textarea{width:100%;font-size:10px;color:#333;font-style:italic;background:transparent;border:none;outline:none;resize:none;font-family:Arial,sans-serif;font-weight:normal;line-height:1.5;min-height:44px;}
+.em-row-actions{display:flex;justify-content:flex-end;gap:4px;margin-top:4px;flex-wrap:wrap;}
+.em-row-actions button{background:var(--cream);border:1px dashed var(--border2);border-radius:var(--rad);padding:3px 8px;font-size:10px;font-family:'Barlow',sans-serif;cursor:pointer;color:var(--text2);transition:all .13s;}
+.em-row-actions button:hover{background:var(--cream2);border-color:var(--navy2);color:var(--navy);}
+.em-row-actions button.del{color:var(--danger);}
+.em-row-actions button.del:hover{background:var(--danger-bg);border-color:#dca09a;}
+.banner-green .em-series-script{background:linear-gradient(135deg,#1a5c2a 60%,#2d8a42 100%);clip-path:polygon(0 0,100% 0,96% 100%,0 100%);}
+.banner-blue .em-series-script{background:linear-gradient(135deg,#1a4a7a 60%,#2a6aaa 100%);clip-path:polygon(3% 0,100% 0,97% 100%,0 100%);}
+.banner-pink .em-series-script{background:linear-gradient(135deg,#8c1a4a 60%,#c42d6e 100%);clip-path:polygon(0 0,92% 0,100% 30%,100% 100%,0 100%);}
+.banner-orange .em-series-script{background:linear-gradient(135deg,#c45a00 60%,#e87a10 100%);clip-path:polygon(0 0,88% 0,100% 50%,88% 100%,0 100%);}
+.edit-mirror-info{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad2);padding:12px 16px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 16px;}
+.em-field{display:flex;flex-direction:column;gap:3px;}
+.em-field label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);}
+.em-field input,.em-field select,.em-field textarea{border:1px solid var(--border);border-radius:var(--rad);padding:5px 7px;font-family:'Barlow',sans-serif;font-size:12px;color:var(--text);background:var(--surface);width:100%;}
+.em-field input:focus,.em-field select:focus,.em-field textarea:focus{outline:none;border-color:var(--navy2);background:#fff;}
+.em-field.full{grid-column:1/-1;}
+.em-wrap{background:var(--bg);border-radius:var(--rad2);padding:16px;overflow-x:auto;margin-bottom:12px;}
+
 </style>
 </head>
 <body>
@@ -678,154 +759,170 @@ function renderEdit(){
   const t=cur();if(!t)return;
   const n=t.numDataCols||5;
 
-  // dim col header inputs
-  const dimHeadInputs = Array.from({length:n},(_,i)=>`
-    <th>
-      <input class="th-input" type="text" value="${esc(t.dimColLabels[i]||'')}" oninput="updDimColLabel(${i},this.value)" style="width:100%"/>
-      <input class="th-input" type="text" value="${esc(t.dimColSubs[i]||'')}" oninput="updDimColSub(${i},this.value)" style="width:100%;font-size:9px;margin-top:1px;opacity:.75"/>
-    </th>`).join('');
+  // colgroup
+  const cg=`<colgroup><col class="ec-item"/>${Array(n).fill('<col class="ec-data"/>').join('')}<col style="width:18px"/></colgroup>`;
 
-  const dimRowsHtml = t.dimRows.map((r,ri)=>`
+  // Dims header inputs
+  const dimThead=`<thead><tr>
+    <th class="em-item-hdr">ITEM</th>
+    ${Array.from({length:n},(_,i)=>`<th>
+      <input type="text" value="${esc(t.dimColLabels[i]||'')}" oninput="updDimColLabel(${i},this.value)" placeholder="label"/>
+      <input type="text" value="${esc(t.dimColSubs[i]||'')}" oninput="updDimColSub(${i},this.value)" placeholder="sub" style="font-size:8px;opacity:.8;margin-top:1px"/>
+    </th>`).join('')}
+    <th></th>
+  </tr></thead>`;
+
+  const dimTbody=`<tbody>${t.dimRows.map((r,ri)=>`
     <tr>
-      <td><input type="text" value="${esc(r.item)}" oninput="updDimRowItem(${ri},this.value)" style="width:36px"/></td>
+      <td class="em-item-cell"><input type="text" value="${esc(r.item)}" oninput="updDimRowItem(${ri},this.value)" style="width:38px"/></td>
       ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updDimVal(${ri},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remDimRow(${ri})">✕</button></td>
-    </tr>`).join('');
+      <td><button class="icon-del" onclick="remDimRow(${ri})" title="Delete row">✕</button></td>
+    </tr>`).join('')}</tbody>`;
 
-  // note col header inputs (same n cols)
-  const noteHeadInputs = Array.from({length:n},(_,i)=>`
-    <th><input class="th-input" type="text" value="${esc(t.noteColLabels[i]||'')}" oninput="updNoteColLabel(${i},this.value)" style="width:100%"/></th>`).join('');
+  // Notes header inputs (same n cols)
+  const noteThead=`<thead><tr>
+    <th class="em-code-hdr"><input type="text" value="${esc(t.noteFirstCol||'Code')}" oninput="u('noteFirstCol',this.value)" style="width:48px"/></th>
+    ${Array.from({length:n},(_,i)=>`<th><input type="text" value="${esc(t.noteColLabels[i]||'')}" oninput="updNoteColLabel(${i},this.value)"/></th>`).join('')}
+    <th></th>
+  </tr></thead>`;
 
-  const noteRowsHtml = t.noteRows.map((r,ri)=>`
+  const noteTbody=`<tbody>${t.noteRows.map((r,ri)=>`
     <tr>
-      <td><input type="text" value="${esc(r.code)}" oninput="updNoteCode(${ri},this.value)" style="width:52px"/></td>
+      <td class="em-code-cell"><input type="text" value="${esc(r.code)}" oninput="updNoteCode(${ri},this.value)" style="width:48px"/></td>
       ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updNoteVal(${ri},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remNoteRow(${ri})">✕</button></td>
-    </tr>`).join('');
+      <td><button class="icon-del" onclick="remNoteRow(${ri})" title="Delete row">✕</button></td>
+    </tr>`).join('')}</tbody>`;
 
-  const matRowsHtml = t.materials.map((m,mi)=>`
+  // Materials
+  const matRows=t.materials.map((m,mi)=>`
     <tr>
-      <td><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)" style="width:30px"/></td>
-      <td><input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)" style="width:36px"/></td>
-      <td><input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)" style="width:90px"/>
-          <label style="font-size:10px;color:#0000cc;display:flex;align-items:center;gap:3px;margin-top:2px"><input type="checkbox" ${m.codeBlue?'checked':''} onchange="updMat(${mi},'codeBlue',this.checked)"/> blue</label></td>
-      <td><input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
-          <label style="font-size:10px;color:#cc0000;display:flex;align-items:center;gap:3px;margin-top:2px"><input type="checkbox" ${m.descNote?'checked':''} onchange="updMat(${mi},'descNote',this.checked)"/> +see notes</label></td>
-      <td><button class="icon-del" onclick="remMat(${mi})">✕</button></td>
+      <td class="em2-item"><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)"/></td>
+      <td style="text-align:center"><input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)"/></td>
+      <td class="${m.codeBlue?'em2-code-blue':''}">
+        <input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)"/>
+        <label class="em-check-row"><input type="checkbox" ${m.codeBlue?'checked':''} onchange="updMat(${mi},'codeBlue',this.checked)"/> blue</label>
+      </td>
+      <td>
+        <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
+        <label class="em-check-row"><input type="checkbox" ${m.descNote?'checked':''} onchange="updMat(${mi},'descNote',this.checked)"/> +See Notes</label>
+      </td>
+      <td><button class="icon-del" onclick="remMat(${mi})" title="Delete">✕</button></td>
     </tr>`).join('');
 
+  // Images
   const img1Html=t.img1
     ?`<div class="img-slot" style="cursor:default"><img src="${t.img1}" alt="Diagram 1"/><button class="img-x" onclick="clearImg(1)">✕</button></div>`
-    :`<div class="img-slot" onclick="document.getElementById('imgInput1').click()"><span style="font-size:26px;opacity:.25">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 1</b></div></div>`;
+    :`<div class="img-slot" onclick="document.getElementById('imgInput1').click()"><span style="font-size:22px;opacity:.22">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 1</b></div></div>`;
   const img2Html=t.img2
     ?`<div class="img-slot" style="cursor:default"><img src="${t.img2}" alt="Diagram 2"/><button class="img-x" onclick="clearImg(2)">✕</button></div>`
-    :`<div class="img-slot" onclick="document.getElementById('imgInput2').click()"><span style="font-size:26px;opacity:.25">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 2</b> (optional)</div></div>`;
+    :`<div class="img-slot" onclick="document.getElementById('imgInput2').click()"><span style="font-size:22px;opacity:.22">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 2</b> (optional)</div></div>`;
+
+  // Logo / company in footer (same logic as preview)
+  const footerRight = (!t.noLogo && logo)
+    ? `<img src="${logo}" alt="logo" class="spec-logo-img"/><div class="spec-website" style="font-size:9px;color:#555">${esc(t.website||'')}</div>`
+    : `<div class="spec-logo-script">${esc(t.company||'')}</div><div style="font-size:9px;color:#555">${esc(t.website||'')}</div>`;
+
+  // Info strip (company settings above the mirror)
+  const infoStrip=`
+    <div class="edit-mirror-info">
+      <div class="em-field"><label>Company</label><input type="text" value="${esc(t.company)}" oninput="u('company',this.value)"/></div>
+      <div class="em-field"><label>Website</label><input type="text" value="${esc(t.website)}" oninput="u('website',this.value)"/></div>
+      <div class="em-field"><label>Banner Color / Shop</label>
+        <select onchange="u('banner',this.value)">
+          <option value="green"  ${t.banner==='green' ?'selected':''}>🟢 Green — Wood Shop</option>
+          <option value="blue"   ${t.banner==='blue'  ?'selected':''}>🔵 Blue — Metal Shop</option>
+          <option value="pink"   ${t.banner==='pink'  ?'selected':''}>🩷 Pink — Gate Shop</option>
+          <option value="orange" ${t.banner==='orange'?'selected':''}>🟠 Orange — Gear Shop</option>
+        </select>
+      </div>
+      <div class="em-field"><label>Style Name</label><input type="text" value="${esc(t.name)}" oninput="u('name',this.value)"/></div>
+      <div class="em-field"><label>Series (footer script)</label><input type="text" value="${esc(t.series)}" oninput="u('series',this.value)"/></div>
+      <div class="em-field"><label>Page Code</label><input type="text" value="${esc(t.cat)}" oninput="u('cat',this.value)"/></div>
+      <div class="em-field full" style="flex-direction:row;align-items:center;gap:12px;">
+        <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
+          <label>Logo</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="img-slot" style="width:120px;min-height:40px;padding:4px" onclick="document.getElementById('logoInput').click()">
+              ${logo?`<img src="${logo}" alt="logo" style="max-height:36px"/>` :'<div style="font-size:10px;color:#aaa">Click to upload logo</div>'}
+            </div>
+            <label style="display:flex;align-items:center;gap:5px;font-size:12px;font-weight:400;cursor:pointer;color:var(--text)">
+              <input type="checkbox" ${t.noLogo?'checked':''} onchange="u('noLogo',this.checked)" style="width:14px;height:14px"/>
+              Hide logo on this sheet
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  // Column action buttons
+  const colBtns=`<div class="em-row-actions" style="margin-top:5px">
+    <button onclick="addDimRow()">+ Dim Row</button>
+    <button onclick="addNoteRow()">+ Note Row</button>
+    <button onclick="addCol()">+ Column (both)</button>
+    <button onclick="removeCol()">− Last Column</button>
+  </div>`;
 
   document.getElementById('mainContent').innerHTML=`
-    <div class="fsec">
-      <div class="fsec-title">🏢 Company & Style Info</div>
-      <div class="fg">
-        <div class="f"><label>Company / Brand Name</label><input type="text" value="${esc(t.company)}" oninput="u('company',this.value)"/></div>
-        <div class="f"><label>Website</label><input type="text" value="${esc(t.website)}" oninput="u('website',this.value)"/></div>
-        <div class="f"><label>Style Name</label><input type="text" value="${esc(t.name)}" oninput="u('name',this.value)"/></div>
-        <div class="f"><label>Series (footer script text)</label><input type="text" value="${esc(t.series)}" oninput="u('series',this.value)"/></div>
-        <div class="f"><label>Page Code (e.g. WIL3)</label><input type="text" value="${esc(t.cat)}" oninput="u('cat',this.value)"/></div>
-        <div class="f"><label>Banner Color / Shop</label>
-          <select onchange="u('banner',this.value)">
-            <option value="green"  ${t.banner==='green' ?'selected':''}>🟢 Green — Wood Shop</option>
-            <option value="blue"   ${t.banner==='blue'  ?'selected':''}>🔵 Blue — Metal Shop</option>
-            <option value="pink"   ${t.banner==='pink'  ?'selected':''}>🩷 Pink — Gate Shop</option>
-            <option value="orange" ${t.banner==='orange'?'selected':''}>🟠 Orange — Gear Shop</option>
-          </select>
-        </div>
-        <div class="f"><label>Extra Note (red italic, bottom-right)</label><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)"/></div>
-        <div class="f full"><label>Subtitle (footer, italic — use \\n for line break)</label><textarea oninput="u('subtitle',this.value)">${esc(t.subtitle)}</textarea></div>
-      </div>
-    </div>
+  ${infoStrip}
+  <div class="em-wrap">
+    <div class="edit-mirror banner-${t.banner||'blue'}">
 
-    <div class="fsec">
-      <div class="fsec-title">🖼 Diagram Images</div>
-      <div class="img-grid">
-        ${img1Html}
-        ${img2Html}
-        <div class="img-note">• 1 image → fills full left panel &nbsp;•&nbsp; 2 images → stacked, equal height<br>Upload your actual fence drawing/diagram (PNG, JPG, PDF screenshot, etc.)</div>
-      </div>
-    </div>
-
-    <div class="fsec">
-      <div class="fsec-title">🏛 Company Logo (footer)</div>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="img-slot" style="width:190px;min-height:65px" onclick="document.getElementById('logoInput').click()">
-          ${logo?`<img src="${logo}" alt="logo" style="max-height:55px"/>`:'<div class="img-slot-lbl" style="color:#aaa">Click to upload logo</div>'}
+      <!-- TOP: image left | dims+notes right -->
+      <div class="edit-mirror-top">
+        <div class="edit-mirror-left">
+          <div class="img-grid">
+            ${img1Html}
+            ${img2Html}
+          </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer">
-            <input type="checkbox" ${t.noLogo?'checked':''} onchange="u('noLogo',this.checked)" style="width:16px;height:16px"/>
-            Hide logo on this spec sheet
-          </label>
-          <div style="font-size:11px;color:var(--text3);max-width:240px;line-height:1.5">The Interstate Visions logo shows by default. Check the box above to remove it from this specific style's printed sheet.</div>
+
+        <div class="edit-mirror-right">
+          <!-- DIMENSIONS -->
+          <div class="edit-mirror-dims">
+            <div class="em-block-title em-dims-title">DIMENSIONS</div>
+            <table class="em-table">${cg}${dimThead}${dimTbody}</table>
+          </div>
+          <!-- NOTES -->
+          <div class="edit-mirror-notes">
+            <div class="em-block-title em-notes-title">NOTES</div>
+            <table class="em-table">${cg}${noteThead}${noteTbody}</table>
+            <div class="em-extra-note"><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)" placeholder="Extra note (red italic)…"/></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="fsec">
-      <div class="fsec-title">📏 Dimensions Table
-        <span style="margin-left:auto;font-size:11px;font-weight:400;color:var(--text3)">${n} data columns (shared with Notes)</span>
-      </div>
-      <p style="font-size:11px;color:var(--text3);margin-bottom:9px">Column count is shared with the Notes table — adding/removing columns here affects both.</p>
-      <div class="dt-wrap">
-        <table class="dt">
+      <!-- MATERIALS -->
+      <div class="edit-mirror-mats">
+        <div class="edit-mirror-mats-title">MATERIALS</div>
+        <table class="em-mat-table">
+          <colgroup><col class="mc2-item"/><col class="mc2-qty"/><col class="mc2-code"/><col class="mc2-desc"/><col class="mc2-del"/></colgroup>
           <thead><tr>
-            <th style="width:44px">Item</th>
-            ${dimHeadInputs}
-            <th style="width:28px"></th>
+            <th class="th2-item">ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th><th></th>
           </tr></thead>
-          <tbody id="dimBody">${dimRowsHtml}</tbody>
+          <tbody>${matRows}</tbody>
         </table>
+        <div class="em-row-actions"><button onclick="addMatRow()">+ Add Material Row</button></div>
       </div>
-      <div class="row-btns">
-        <button class="add-row" style="flex:1" onclick="addDimRow()">+ Add Row</button>
-        <button class="add-row" style="flex:1" onclick="addCol()">+ Add Column (both tables)</button>
-        <button class="add-row" style="flex:1" onclick="removeCol()">− Remove Last Column</button>
-      </div>
-    </div>
 
-    <div class="fsec">
-      <div class="fsec-title">📝 Notes Table <span style="margin-left:auto;font-size:11px;font-weight:400;color:var(--text3)">${n} data columns</span></div>
-      <div class="dt-wrap">
-        <table class="dt">
-          <thead><tr>
-            <th style="width:64px"><input class="th-input" type="text" value="${esc(t.noteFirstCol||'Code')}" oninput="u('noteFirstCol',this.value)" style="width:100%"/></th>
-            ${noteHeadInputs}
-            <th style="width:28px"></th>
-          </tr></thead>
-          <tbody id="noteBody">${noteRowsHtml}</tbody>
-        </table>
+      <!-- FOOTER BANNER -->
+      <div class="edit-mirror-footer">
+        <div class="em-footer-left">
+          <div class="em-series-script"><input type="text" value="${esc(t.series||t.name||'')}" oninput="u('series',this.value)"/></div>
+          <div class="em-subtitle-wrap">
+            <textarea oninput="u('subtitle',this.value)" placeholder="Subtitle (use \\n for line break)…">${esc(t.subtitle||'')}</textarea>
+          </div>
+        </div>
+        <div class="em-footer-mid">
+          <div class="em-page-lbl">PAGE</div>
+          <div class="em-page-val"><input type="text" value="${esc(t.cat||'')}" oninput="u('cat',this.value)" placeholder="—"/></div>
+        </div>
+        <div class="em-footer-right">${footerRight}</div>
       </div>
-      <div class="row-btns">
-        <button class="add-row" style="flex:1" onclick="addNoteRow()">+ Add Row</button>
-      </div>
-    </div>
 
-    <div class="fsec">
-      <div class="fsec-title">📋 Materials</div>
-      <div class="dt-wrap">
-        <table class="dt">
-          <thead><tr>
-            <th style="width:38px">Item</th>
-            <th style="width:42px">Qty</th>
-            <th style="width:130px">Code</th>
-            <th>Description</th>
-            <th style="width:28px"></th>
-          </tr></thead>
-          <tbody id="matBody">${matRowsHtml}</tbody>
-        </table>
-      </div>
-      <button class="add-row" onclick="addMatRow()">+ Add Material Row</button>
     </div>
-  `;
+  </div>
+  ${colBtns}`;
 }
-
 // ── FIELD UPDATERS ──
 function u(k,v){ const t=cur();if(!t)return;t[k]=v;save();if(k==='name'){document.getElementById('toolbarName').textContent=v;renderSB();} }
 function updDimColLabel(i,v){ const t=cur();if(t){t.dimColLabels[i]=v;save();} }
