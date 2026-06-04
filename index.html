@@ -531,7 +531,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .em-mat-table col.mc2-item{width:36px;}.em-mat-table col.mc2-qty{width:58px;}.em-mat-table col.mc2-code{width:108px;}.em-mat-table col.mc2-desc{width:auto;}.em-mat-table col.mc2-del{width:20px;}
 .em-mat-table th{background:#fff;color:#000;padding:2px 4px;text-align:center;font-size:10px;font-weight:bold;letter-spacing:.04em;border:1px solid #aaa;}
 .em-mat-table th.th2-item{color:#0000cc;}
-.em-mat-table td{padding:1px 3px;border:1px solid #ccc;vertical-align:middle;height:20px;}
+.em-mat-table td{padding:3px 4px;border:1px solid #ccc;vertical-align:top;height:auto;min-height:44px;}
 .em-mat-table tr:nth-child(even) td{background:#f8f8f8;}
 .em-mat-table td.em2-item{color:#0000cc;font-weight:bold;text-align:center;}
 .em-mat-table td.em2-code-blue{color:#0000cc;font-size:10px;text-align:center;}
@@ -678,14 +678,14 @@ function defaultStyle(id,name,series,cat){
       {code:'D code', vals:['','','','','']},
     ],
     materials:[
-      {item:'A',qty:'2', code:'RC148-IL,2S', desc:"1\"x4\"x96\" TOP RAIL DOUBLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",     codeBlue:false,descNote:false},
-      {item:'B',qty:'2', code:'RC148-IL1S',  desc:"1\"x4\"x96\" BOTTOM RAIL SINGLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",  codeBlue:false,descNote:false},
-      {item:'C',qty:'27',code:'See notes',   desc:"2X2 (1½\"x1½\") PYRAMID TOP EASE EDGE PICKET; D+BETTER CEDAR",                  codeBlue:true, descNote:true},
-      {item:'D',qty:'2', code:'N/A',         desc:'WOOD POSTS (For lengths see 1)',                                                   codeBlue:false,descNote:false},
-      {item:'E',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
-      {item:'F',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
-      {item:'G',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false},
-      {item:'H',qty:'62',code:'N/A',         desc:"2½\" Triple galvanized nail",                                                      codeBlue:false,descNote:false},
+      {item:'A',qty:'2', code:'RC148-IL,2S', desc:"1\"x4\"x96\" TOP RAIL DOUBLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",     codeBlue:false,descNote:false,seeItem:0},
+      {item:'B',qty:'2', code:'RC148-IL1S',  desc:"1\"x4\"x96\" BOTTOM RAIL SINGLE SIDED ROUND OVER (3/4\"x3.5\") D+BETTER CEDAR",  codeBlue:false,descNote:false,seeItem:0},
+      {item:'C',qty:'27',code:'See notes',   desc:"2X2 (1½\"x1½\") PYRAMID TOP EASE EDGE PICKET; D+BETTER CEDAR",                  codeBlue:true, descNote:true,seeItem:0},
+      {item:'D',qty:'2', code:'N/A',         desc:'WOOD POSTS',                                                                        codeBlue:false,descNote:false,seeItem:1},
+      {item:'E',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false,seeItem:0},
+      {item:'F',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false,seeItem:0},
+      {item:'G',qty:'',  code:'',            desc:'',  codeBlue:false,descNote:false,seeItem:0},
+      {item:'H',qty:'62',code:'N/A',         desc:"2½\" Triple galvanized nail",                                                      codeBlue:false,descNote:false,seeItem:0},
     ]
   };
 }
@@ -804,7 +804,10 @@ function renderEdit(){
       </td>
       <td>
         <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
-        <label class="em-check-row"><input type="checkbox" ${m.descNote?'checked':''} onchange="updMat(${mi},'descNote',this.checked)"/> +See Notes</label>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;">
+          <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.descNote?'checked':''} onchange="setMatAppend(${mi},'note',this.checked)"/> See Notes</label>
+          ${t.dimRows.map((dr,dri)=>`<label class="em-check-row" style="color:#555"><input type="checkbox" ${(m.seeItem===(dri+1))?'checked':''} onchange="setMatAppend(${mi},'item',${dri+1},this.checked)"/> See item ${esc(dr.item||String(dri+1))}</label>`).join('')}
+        </div>
       </td>
       <td><button class="icon-del" onclick="remMat(${mi})" title="Delete">✕</button></td>
     </tr>`).join('');
@@ -941,6 +944,24 @@ function updNoteColLabel(i,v){ const t=cur();if(t){t.noteColLabels[i]=v;save();}
 function updNoteCode(i,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].code=v;save();} }
 function updNoteVal(i,j,v){ const t=cur();if(t&&t.noteRows[i]){t.noteRows[i].vals[j]=v;save();} }
 function updMat(i,k,v){ const t=cur();if(t&&t.materials[i]){t.materials[i][k]=v;save();} }
+function setMatAppend(mi,type,valOrChecked,checked){
+  const t=cur();if(!t||!t.materials[mi])return;
+  const m=t.materials[mi];
+  if(type==='note'){
+    // checking note clears seeItem
+    m.descNote=valOrChecked;
+    if(valOrChecked) m.seeItem=0;
+  } else {
+    // type==='item', valOrChecked is the item number, checked is the bool
+    if(checked){
+      m.seeItem=valOrChecked;
+      m.descNote=false;
+    } else {
+      if(m.seeItem===valOrChecked) m.seeItem=0;
+    }
+  }
+  save(); renderEdit();
+}
 
 function addDimRow(){ const t=cur();if(!t)return; t.dimRows.push({item:String(t.dimRows.length+1),vals:Array(t.numDataCols).fill(''),hiCols:[]}); save();renderEdit(); }
 function remDimRow(i){ const t=cur();if(t){t.dimRows.splice(i,1);save();renderEdit();} }
@@ -967,7 +988,7 @@ function removeCol(){
 function addMatRow(){
   const t=cur();if(!t)return;
   const items='ABCDEFGHIJKLMNOP';
-  t.materials.push({item:items[t.materials.length]||'',qty:'',code:'',desc:'',codeBlue:false,descNote:false});
+  t.materials.push({item:items[t.materials.length]||'',qty:'',code:'',desc:'',codeBlue:false,descNote:false,seeItem:0});
   save();renderEdit();
 }
 function remMat(i){ const t=cur();if(t){t.materials.splice(i,1);save();renderEdit();} }
@@ -1024,7 +1045,7 @@ function renderPreview(){
       <td class="m-item">${esc(m.item)}</td>
       <td class="${qtyIsNote?'m-qty-note':'m-qty'}">${esc(m.qty)}</td>
       <td class="${m.codeBlue?'m-code-blue':'m-code'}">${esc(m.code)}</td>
-      <td>${esc(m.desc)}${m.descNote?' <span style="color:#cc0000">(See Notes)</span>':''}</td>
+      <td>${esc(m.desc)}${m.descNote?' <span style="color:#0000cc">(See Notes)</span>':''}</td>
     </tr>`;
   }).join('');
 
