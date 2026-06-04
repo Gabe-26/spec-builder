@@ -760,7 +760,7 @@ function renderEdit(){
   const n=t.numDataCols||5;
 
   // colgroup
-  const cg=`<colgroup><col class="ec-item"/>${Array(n).fill('<col class="ec-data"/>').join('')}<col style="width:18px"/></colgroup>`;
+  const cg=`<colgroup><col class="ec-item"/>${Array(n).fill('<col class="ec-data"/>').join('')}<col style="width:24px"/></colgroup>`;
 
   // Dims header inputs
   const dimThead=`<thead><tr>
@@ -776,7 +776,7 @@ function renderEdit(){
     <tr>
       <td class="em-item-cell"><input type="text" value="${esc(r.item)}" oninput="updDimRowItem(${ri},this.value)" style="width:38px"/></td>
       ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updDimVal(${ri},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remDimRow(${ri})" title="Delete row">✕</button></td>
+      <td><button class="icon-del" onclick="remDimRow(${ri})" title="Delete row" style="font-size:10px;padding:1px 3px">✕</button></td>
     </tr>`).join('')}</tbody>`;
 
   // Notes header inputs (same n cols)
@@ -790,7 +790,7 @@ function renderEdit(){
     <tr>
       <td class="em-code-cell"><input type="text" value="${esc(r.code)}" oninput="updNoteCode(${ri},this.value)" style="width:48px"/></td>
       ${Array.from({length:n},(_,j)=>`<td><input type="text" value="${esc((r.vals||[])[j]||'')}" oninput="updNoteVal(${ri},${j},this.value)"/></td>`).join('')}
-      <td><button class="icon-del" onclick="remNoteRow(${ri})" title="Delete row">✕</button></td>
+      <td><button class="icon-del" onclick="remNoteRow(${ri})" title="Delete row" style="font-size:10px;padding:1px 3px">✕</button></td>
     </tr>`).join('')}</tbody>`;
 
   // Materials
@@ -881,12 +881,20 @@ function renderEdit(){
           <div class="edit-mirror-dims">
             <div class="em-block-title em-dims-title">DIMENSIONS</div>
             <table class="em-table">${cg}${dimThead}${dimTbody}</table>
+            <div style="display:flex;gap:4px;margin-top:4px;">
+              <button onclick="addDimRow()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:3px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Row</button>
+              <button onclick="addCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:3px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Col</button>
+              <button onclick="removeCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:3px 6px;font-size:10px;cursor:pointer;color:#b53528;">− Col</button>
+            </div>
           </div>
           <!-- NOTES -->
           <div class="edit-mirror-notes">
             <div class="em-block-title em-notes-title">NOTES</div>
             <table class="em-table">${cg}${noteThead}${noteTbody}</table>
             <div class="em-extra-note"><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)" placeholder="Extra note (red italic)…"/></div>
+            <div style="margin-top:4px;">
+              <button onclick="addNoteRow()" style="width:100%;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:3px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Note Row</button>
+            </div>
           </div>
         </div>
       </div>
