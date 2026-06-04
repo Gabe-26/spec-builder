@@ -806,7 +806,7 @@ function renderEdit(){
         <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;">
           <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.descNote?'checked':''} onchange="setMatAppend(${mi},'note',this.checked)"/> See Notes</label>
-          ${t.dimRows.map((dr,dri)=>`<label class="em-check-row" style="color:#555"><input type="checkbox" ${(m.seeItem===(dri+1))?'checked':''} onchange="setMatAppend(${mi},'item',${dri+1},this.checked)"/> See item ${esc(dr.item||String(dri+1))}</label>`).join('')}
+          ${t.dimRows.map((dr,dri)=>`<label class="em-check-row" style="color:#555"><input type="checkbox" ${(Number(m.seeItem)===(dri+1))?'checked':''} onchange="setMatAppend(${mi},'item',${dri+1},this.checked)"/> See item ${esc(dr.item||String(dri+1))}</label>`).join('')}
         </div>
       </td>
       <td><button class="icon-del" onclick="remMat(${mi})" title="Delete">✕</button></td>
@@ -954,10 +954,10 @@ function setMatAppend(mi,type,valOrChecked,checked){
   } else {
     // type==='item', valOrChecked is the item number, checked is the bool
     if(checked){
-      m.seeItem=valOrChecked;
+      m.seeItem=Number(valOrChecked);
       m.descNote=false;
     } else {
-      if(m.seeItem===valOrChecked) m.seeItem=0;
+      if(Number(m.seeItem)===Number(valOrChecked)) m.seeItem=0;
     }
   }
   save(); renderEdit();
@@ -1045,7 +1045,7 @@ function renderPreview(){
       <td class="m-item">${esc(m.item)}</td>
       <td class="${qtyIsNote?'m-qty-note':'m-qty'}">${esc(m.qty)}</td>
       <td class="${m.codeBlue?'m-code-blue':'m-code'}">${esc(m.code)}</td>
-      <td>${esc(m.desc)}${m.descNote?' <span style="color:#0000cc">(See Notes)</span>':''}</td>
+      <td>${esc(m.desc)}${m.descNote?' <span style="color:#0000cc">(See Notes)</span>':''}${(m.seeItem&&Number(m.seeItem)>0)?' (For length see item <span style="color:#cc0000">'+Number(m.seeItem)+'</span>)':''}</td>
     </tr>`;
   }).join('');
 
