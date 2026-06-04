@@ -577,8 +577,11 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   <div class="app-div"></div>
   <div class="app-sub">Spec Sheet Generator</div>
   <div class="spacer"></div>
+  <button class="app-btn" onclick="exportStyles()" title="Download all your specs as a backup file">📥 Export</button>
+  <button class="app-btn" onclick="document.getElementById('importInput').click()" title="Load a previously exported backup file">📤 Import</button>
   <button class="app-btn gold" id="globalPrint" onclick="doPrint()" style="display:none">🖨 Print / Save PDF</button>
 </div>
+<input type="file" id="importInput" accept=".json" style="display:none" onchange="importStyles(event)"/>
 
 <div class="app-body">
   <div class="sidebar">
@@ -691,6 +694,74 @@ function defaultStyle(id,name,series,cat){
 }
 
 // ── SIDEBAR ──
+// ── EXPORT / IMPORT ──
+function exportStyles(){
+  const data = {
+    version: 1,
+    exported: new Date().toISOString(),
+    styles: S,
+    logo: localStorage.getItem('fsp4_logo') || null
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = 'FenceSpec_Backup_' + date + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importStyles(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try {
+      const data = JSON.parse(ev.target.result);
+      // Support both raw array and wrapped export format
+      const incoming = Array.isArray(data) ? data : (data.styles || []);
+      if(!incoming.length){ alert('No styles found in this file.'); return; }
+      const action = confirm(
+        'Import ' + incoming.length + ' style(s) from "' + file.name + '"?
+
+' +
+        'Click OK to MERGE with your existing styles.
+' +
+        'Click Cancel to REPLACE everything with the imported file.'
+      );
+      if(action){
+        // Merge — add imported styles, skip any with matching IDs
+        const existingIds = new Set(S.map(s=>s.id));
+        let added = 0;
+        incoming.forEach(s=>{
+          if(!existingIds.has(s.id)){ S.push(s); added++; }
+        });
+        alert('Merged! Added ' + added + ' new style(s). ' + (incoming.length - added) + ' duplicate(s) skipped.');
+      } else {
+        // Replace
+        if(!confirm('This will DELETE all your current styles and replace them. Are you sure?')) return;
+        S = incoming;
+        cid = null;
+        document.getElementById('toolbar').style.display='none';
+        document.getElementById('globalPrint').style.display='none';
+        document.getElementById('mainContent').innerHTML='<div class="empty"><div class="empty-icon">🔩</div><h2>Styles Imported</h2><p>Select a style from the sidebar to start editing.</p></div>';
+      }
+      // Restore logo if present
+      if(!Array.isArray(data) && data.logo){
+        logo = data.logo;
+        localStorage.setItem('fsp4_logo', logo);
+      }
+      save();
+      renderSB();
+    } catch(err) {
+      alert('Could not read file. Make sure it's a valid FenceSpec export (.json).');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
 function filterList(){ filt=document.getElementById('sbSearch').value.toLowerCase(); renderSB(); }
 function renderSB(){
   const el=document.getElementById('styleList');
