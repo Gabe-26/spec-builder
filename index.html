@@ -797,10 +797,13 @@ function renderEdit(){
   const matRows=t.materials.map((m,mi)=>`
     <tr>
       <td class="em2-item"><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)"/></td>
-      <td style="text-align:center"><input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)"/></td>
+      <td style="text-align:center;vertical-align:top">
+        <input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)"/>
+        <div style="margin-top:3px"><button onclick="updMat(${mi},'qty','See notes');renderEdit()" style="font-size:9px;padding:2px 4px;background:#e8f0ff;border:1px solid #aac;border-radius:3px;cursor:pointer;color:#0000cc;white-space:nowrap">See notes</button></div>
+      </td>
       <td class="${m.codeBlue?'em2-code-blue':''}">
         <input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)"/>
-        <label class="em-check-row"><input type="checkbox" ${m.codeBlue?'checked':''} onchange="updMat(${mi},'codeBlue',this.checked)"/> blue</label>
+        <div style="margin-top:3px"><button onclick="updMat(${mi},'code','See notes');updMat(${mi},'codeBlue',true);renderEdit()" style="font-size:9px;padding:2px 4px;background:#e8f0ff;border:1px solid #aac;border-radius:3px;cursor:pointer;color:#0000cc;white-space:nowrap">See notes</button></div>
       </td>
       <td>
         <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
