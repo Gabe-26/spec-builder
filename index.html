@@ -799,11 +799,11 @@ function renderEdit(){
       <td class="em2-item"><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)"/></td>
       <td style="text-align:center;vertical-align:top">
         <input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)"/>
-        <div style="margin-top:3px"><button onclick="updMat(${mi},'qty','See notes');renderEdit()" style="font-size:9px;padding:2px 4px;background:#e8f0ff;border:1px solid #aac;border-radius:3px;cursor:pointer;color:#0000cc;white-space:nowrap">See notes</button></div>
+        <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.qty==='See notes'?'checked':''} onchange="updMat(${mi},'qty',this.checked?'See notes':'');renderEdit()"/> See notes</label>
       </td>
       <td class="${m.codeBlue?'em2-code-blue':''}">
         <input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)"/>
-        <div style="margin-top:3px"><button onclick="updMat(${mi},'code','See notes');updMat(${mi},'codeBlue',true);renderEdit()" style="font-size:9px;padding:2px 4px;background:#e8f0ff;border:1px solid #aac;border-radius:3px;cursor:pointer;color:#0000cc;white-space:nowrap">See notes</button></div>
+        <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.code==='See notes'?'checked':''} onchange="(()=>{updMat(${mi},'code',this.checked?'See notes':'');updMat(${mi},'codeBlue',this.checked);renderEdit()})()"/> See notes</label>
       </td>
       <td>
         <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
