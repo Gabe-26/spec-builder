@@ -573,6 +573,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
     border:2px solid #444!important;
   }
   .spec-top{ min-height:0!important; flex:1!important; }
+  .spec.layout-gate .spec-top{ flex:none!important; }
   @page{size:11in 8.5in landscape;margin:4mm}
 }
 
@@ -736,11 +737,12 @@ body.dark-mode .mat-pill-item.active{background:#993333;color:#ffe8e8;}
 /* ── GATE LAYOUT (preview/print) ── */
 .spec.layout-gate .spec-top{
   flex-direction:column;
+  flex:none;
 }
 .spec.layout-gate .spec-img-panel{
   flex:none;width:100%;border-right:none;border-bottom:2px solid #444;
-  display:grid;grid-template-columns:35fr 35fr 30fr;gap:0;padding:0;
-  min-height:0;
+  display:grid;grid-template-columns:35fr 35fr 30fr;grid-template-rows:1fr;gap:0;padding:0;
+  height:280px;overflow:hidden;
 }
 .spec.layout-gate .spec-img-panel img{
   width:100%;height:100%;object-fit:contain;padding:6px;
