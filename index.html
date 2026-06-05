@@ -17,6 +17,30 @@
   --rad:5px;--rad2:9px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* ── DARK THEME ── */
+body.dark-mode{
+  --bg:#1a1a1f;--surface:#24242c;
+  --border:#3a3a44;--border2:#4a4a56;
+  --text:#e8e6e0;--text2:#b0aaa4;--text3:#707070;
+  --cream:#2a2a32;--cream2:#32323c;
+  --danger-bg:#3a1a18;
+}
+body.dark-mode .sidebar{ background:var(--surface); }
+body.dark-mode .toolbar{ background:var(--surface); }
+body.dark-mode .tab{ background:transparent; }
+body.dark-mode .tab.active{ background:var(--navy); }
+body.dark-mode .btn{ background:var(--surface);border-color:var(--border); }
+body.dark-mode .sb-search input{ background:var(--bg);border-color:var(--border);color:var(--text); }
+body.dark-mode .sb-item{ background:var(--surface); }
+body.dark-mode .sb-item:hover{ background:var(--cream); }
+body.dark-mode .sb-item.active{ background:var(--navy); }
+body.dark-mode .f input,body.dark-mode .f select,body.dark-mode .f textarea{ background:var(--bg);border-color:var(--border);color:var(--text); }
+body.dark-mode .em-field input,body.dark-mode .em-field select,body.dark-mode .em-field textarea{ background:var(--bg);border-color:var(--border);color:var(--text); }
+body.dark-mode .edit-mirror-info{ background:var(--surface);border-color:var(--border); }
+body.dark-mode .em-wrap{ background:var(--bg); }
+body.dark-mode .img-slot{ background:#2a2a32;border-color:#4a4a56; }
+body.dark-mode .btn-cancel{ background:var(--surface);color:var(--text2);border-color:var(--border); }
+body.dark-mode .add-row{ background:var(--cream);border-color:var(--border2);color:var(--text2); }
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
 
 /* ── APP BAR ── */
@@ -577,6 +601,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
   <div class="app-div"></div>
   <div class="app-sub">Spec Sheet Generator</div>
   <div class="spacer"></div>
+  <button class="app-btn" id="themeToggle" onclick="toggleTheme()" title="Switch dark/light mode">🌙 Dark</button>
   <button class="app-btn" onclick="exportStyles()" title="Download all your specs as a backup file">📥 Export</button>
   <button class="app-btn" onclick="document.getElementById('importInput').click()" title="Load a previously exported backup file">📤 Import</button>
   <button class="app-btn gold" id="globalPrint" onclick="doPrint()" style="display:none">🖨 Print / Save PDF</button>
@@ -695,6 +720,24 @@ function defaultStyle(id,name,series,cat){
 
 // ── SIDEBAR ──
 // ── EXPORT / IMPORT ──
+// ── THEME TOGGLE ──
+function toggleTheme(){
+  const dark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('fsp4_theme', dark ? 'dark' : 'light');
+  document.getElementById('themeToggle').textContent = dark ? '☀️ Light' : '🌙 Dark';
+}
+// Apply saved theme on load
+(function(){
+  if(localStorage.getItem('fsp4_theme')==='dark'){
+    document.body.classList.add('dark-mode');
+    // Button text set after DOM ready
+    window.addEventListener('DOMContentLoaded',function(){
+      const btn=document.getElementById('themeToggle');
+      if(btn) btn.textContent='☀️ Light';
+    });
+  }
+})();
+
 function exportStyles(){
   const data = {
     version: 1,
