@@ -102,6 +102,9 @@ body.dark-mode .em-row-actions button.del{ color:#ff8080; }
 /* Image slots */
 body.dark-mode .edit-mirror-left .img-slot{ background:#28283a;border-color:#4a4a56; }
 body.dark-mode .edit-mirror-left .img-slot-lbl{ color:#707080; }
+body.dark-mode .gate-bottom{ border-color:#3a3a44; }
+body.dark-mode .gate-bottom-left{ border-color:#3a3a44;background:#1e1e26; }
+body.dark-mode .gate-bottom-right{ background:#1e1e26; }
 body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
 
 /* ── APP BAR ── */
@@ -695,6 +698,62 @@ body.dark-mode .mat-pill-item.active{background:#993333;color:#ffe8e8;}
 .em-field.full{grid-column:1/-1;}
 .em-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad2);overflow:hidden;margin-bottom:12px;}
 
+/* ── GATE LAYOUT (edit mirror) ── */
+.edit-mirror.layout-gate{
+  grid-template-columns:1fr;
+  grid-template-rows:auto auto auto;
+}
+.edit-mirror.layout-gate .edit-mirror-left{
+  grid-column:1;grid-row:1;border-right:none;border-bottom:2px solid #444;
+}
+.edit-mirror.layout-gate .edit-mirror-left .img-grid{
+  grid-template-columns:35fr 35fr 30fr;border-bottom:none;
+}
+.edit-mirror.layout-gate .edit-mirror-right{
+  display:none;
+}
+.edit-mirror.layout-gate .edit-mirror-mats{
+  border-top:none;
+}
+/* Gate bottom section: dims+notes next to materials */
+.gate-bottom{
+  display:grid;grid-template-columns:320px 1fr;
+  grid-column:1;grid-row:2;border-top:2px solid #444;
+}
+.gate-bottom-left{
+  border-right:2px solid #444;display:flex;flex-direction:column;
+}
+.gate-bottom-right{
+  display:flex;flex-direction:column;
+}
+
+/* ── GATE LAYOUT (preview/print) ── */
+.spec.layout-gate .spec-top{
+  flex-direction:column;
+}
+.spec.layout-gate .spec-img-panel{
+  flex:none;width:100%;border-right:none;border-bottom:2px solid #444;
+  display:grid;grid-template-columns:35fr 35fr 30fr;gap:0;padding:0;
+}
+.spec.layout-gate .spec-img-panel img{
+  width:100%;height:100%;object-fit:contain;padding:6px;
+}
+.spec.layout-gate .spec-img-panel .spec-img-divider{display:none;}
+.spec.layout-gate .spec-right{
+  display:none;
+}
+.spec.layout-gate .spec-gate-bottom{
+  display:grid;grid-template-columns:280px 1fr;
+  border-top:0;flex:1;
+}
+.spec.layout-gate .spec-gate-left{
+  border-right:2px solid #444;display:flex;flex-direction:column;
+}
+.spec.layout-gate .spec-gate-right{
+  display:flex;flex-direction:column;
+}
+.spec:not(.layout-gate) .spec-gate-bottom{display:none;}
+
 </style>
 </head>
 <body>
@@ -768,6 +827,7 @@ body.dark-mode .mat-pill-item.active{background:#993333;color:#ffe8e8;}
 
 <input type="file" id="imgInput1" accept="image/*" style="display:none" onchange="loadImg(1,event)"/>
 <input type="file" id="imgInput2" accept="image/*" style="display:none" onchange="loadImg(2,event)"/>
+<input type="file" id="imgInput3" accept="image/*" style="display:none" onchange="loadImg(3,event)"/>
 <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="loadLogo(event)"/>
 
 <script>
@@ -788,7 +848,7 @@ function defaultStyle(id,name,series,cat){
     subtitle:'Pyramid Top Ease Edge spaced picket panel\nDouble Sided Panel',
     extraNote:'Scalloped pickets are with 6" drop',
     banner:'blue',
-    img1:null, img2:null,
+    layout:'standard', img1:null, img2:null, img3:null,
     // Dims: column headers (label + sub-label) and rows
     // Number of data columns must match between dims and notes
     numDataCols: 5,
@@ -1033,6 +1093,10 @@ function renderEdit(){
     ?`<div class="img-slot" style="cursor:default"><img src="${t.img2}" alt="Diagram 2"/><button class="img-x" onclick="clearImg(2)">✕</button></div>`
     :`<div class="img-slot" onclick="document.getElementById('imgInput2').click()"><span style="font-size:22px;opacity:.22">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 2</b> (optional)</div></div>`;
 
+  const img3Html=t.img3
+    ?`<div class="img-slot" style="cursor:default"><img src="${t.img3}" alt="Diagram 3"/><button class="img-x" onclick="clearImg(3)">✕</button></div>`
+    :`<div class="img-slot" onclick="document.getElementById('imgInput3').click()"><span style="font-size:22px;opacity:.22">🖼</span><div class="img-slot-lbl">Click to upload<br/><b>Diagram Image 3</b></div></div>`;
+
   // Logo / company in footer (same logic as preview)
   const footerRight = (!t.noLogo && logo)
     ? `<img src="${logo}" alt="logo" class="spec-logo-img"/><div class="spec-website" style="font-size:9px;color:#555">${esc(t.website||'')}</div>`
@@ -1043,6 +1107,12 @@ function renderEdit(){
     <div class="edit-mirror-info">
       <div class="em-field"><label>Company</label><input type="text" value="${esc(t.company)}" oninput="u('company',this.value)"/></div>
       <div class="em-field"><label>Website</label><input type="text" value="${esc(t.website)}" oninput="u('website',this.value)"/></div>
+      <div class="em-field"><label>Layout</label>
+        <select onchange="u('layout',this.value);renderEdit()">
+          <option value="standard" ${(t.layout||'standard')==='standard'?'selected':''}>Standard (2 images)</option>
+          <option value="gate" ${t.layout==='gate'?'selected':''}>Gate (3 images)</option>
+        </select>
+      </div>
       <div class="em-field"><label>Banner Color / Shop</label>
         <select onchange="u('banner',this.value)">
           <option value="green"  ${t.banner==='green' ?'selected':''}>🟢 Green — Wood Shop</option>
@@ -1078,69 +1148,83 @@ function renderEdit(){
     <button onclick="removeCol()">− Last Column</button>
   </div>`;
 
-  document.getElementById('mainContent').innerHTML=`
+  const isGate = t.layout === 'gate';
+  const layoutClass = isGate ? 'layout-gate' : '';
+
+  // Shared dims+notes block
+  const dimsNotesHtml = `
+    <div class="edit-mirror-dims">
+      <div class="em-block-title em-dims-title">DIMENSIONS</div>
+      <table class="em-table">${cg}${dimThead}${dimTbody}</table>
+      <div style="display:flex;gap:4px;margin-top:6px;">
+        <button onclick="addDimRow()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Row</button>
+        <button onclick="addCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Col</button>
+        <button onclick="removeCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#b53528;">- Col</button>
+      </div>
+    </div>
+    <div class="edit-mirror-notes">
+      <div class="em-block-title em-notes-title">NOTES</div>
+      <table class="em-table">${cg}${noteThead}${noteTbody}</table>
+      <div class="em-extra-note"><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)" placeholder="Extra note (red italic)..."/></div>
+      <div style="margin-top:6px;">
+        <button onclick="addNoteRow()" style="width:100%;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Note Row</button>
+      </div>
+    </div>`;
+
+  // Shared materials block
+  const matsHtml = `
+    <div class="edit-mirror-mats">
+      <div class="edit-mirror-mats-title">MATERIALS</div>
+      <table class="em-mat-table">
+        <colgroup><col class="mc2-item"/><col class="mc2-qty"/><col class="mc2-code"/><col class="mc2-desc"/><col class="mc2-del"/></colgroup>
+        <thead><tr>
+          <th class="th2-item">ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th><th></th>
+        </tr></thead>
+        <tbody>${matRows}</tbody>
+      </table>
+      <div class="em-row-actions"><button onclick="addMatRow()">+ Add Material Row</button></div>
+    </div>`;
+
+  // Standard layout: images+materials left, dims+notes right
+  const standardBody = `
+    <div class="edit-mirror-left">
+      <div class="img-grid">${img1Html}${img2Html}</div>
+      ${matsHtml}
+    </div>
+    <div class="edit-mirror-right">${dimsNotesHtml}</div>`;
+
+  // Gate layout: 3 images across top, then dims+notes | materials below
+  const gateBody = `
+    <div class="edit-mirror-left">
+      <div class="img-grid">${img1Html}${img2Html}${img3Html}</div>
+    </div>
+    <div class="gate-bottom">
+      <div class="gate-bottom-left">${dimsNotesHtml}</div>
+      <div class="gate-bottom-right">${matsHtml}</div>
+    </div>`;
+
+  // Footer banner (shared)
+  const footerHtml = `
+    <div class="edit-mirror-footer">
+      <div class="em-footer-left">
+        <div class="em-series-script"><input type="text" value="${esc(t.series||t.name||'')}" oninput="u('series',this.value)"/></div>
+        <div class="em-subtitle-wrap">
+          <textarea oninput="u('subtitle',this.value)" placeholder="Subtitle...">${esc(t.subtitle||'')}</textarea>
+        </div>
+      </div>
+      <div class="em-footer-mid">
+        <div class="em-page-lbl">PAGE</div>
+        <div class="em-page-val"><input type="text" value="${esc(t.cat||'')}" oninput="u('cat',this.value)" placeholder="—"/></div>
+      </div>
+      <div class="em-footer-right">${footerRight}</div>
+    </div>`;
+
+  document.getElementById('mainContent').innerHTML = `
   ${infoStrip}
   <div class="em-wrap">
-    <div class="edit-mirror banner-${t.banner||'blue'}">
-
-      <!-- LEFT COL: images on top, materials below -->
-      <div class="edit-mirror-left">
-        <div class="img-grid">
-          ${img1Html}
-          ${img2Html}
-        </div>
-        <!-- MATERIALS -->
-        <div class="edit-mirror-mats">
-          <div class="edit-mirror-mats-title">MATERIALS</div>
-          <table class="em-mat-table">
-            <colgroup><col class="mc2-item"/><col class="mc2-qty"/><col class="mc2-code"/><col class="mc2-desc"/><col class="mc2-del"/></colgroup>
-            <thead><tr>
-              <th class="th2-item">ITEM</th><th>QTY</th><th>CODE</th><th>DESCRIPTION</th><th></th>
-            </tr></thead>
-            <tbody>${matRows}</tbody>
-          </table>
-          <div class="em-row-actions"><button onclick="addMatRow()">+ Add Material Row</button></div>
-        </div>
-      </div>
-
-      <!-- RIGHT COL: dims on top, notes below -->
-      <div class="edit-mirror-right">
-        <!-- DIMENSIONS -->
-        <div class="edit-mirror-dims">
-          <div class="em-block-title em-dims-title">DIMENSIONS</div>
-          <table class="em-table">${cg}${dimThead}${dimTbody}</table>
-          <div style="display:flex;gap:4px;margin-top:6px;">
-            <button onclick="addDimRow()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Row</button>
-            <button onclick="addCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Col</button>
-            <button onclick="removeCol()" style="flex:1;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#b53528;">− Col</button>
-          </div>
-        </div>
-        <!-- NOTES -->
-        <div class="edit-mirror-notes">
-          <div class="em-block-title em-notes-title">NOTES</div>
-          <table class="em-table">${cg}${noteThead}${noteTbody}</table>
-          <div class="em-extra-note"><input type="text" value="${esc(t.extraNote)}" oninput="u('extraNote',this.value)" placeholder="Extra note (red italic)…"/></div>
-          <div style="margin-top:6px;">
-            <button onclick="addNoteRow()" style="width:100%;background:#f0ebe0;border:1px dashed #b0aca4;border-radius:4px;padding:4px 6px;font-size:10px;cursor:pointer;color:#4a4540;">+ Note Row</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- FOOTER BANNER -->
-      <div class="edit-mirror-footer">
-        <div class="em-footer-left">
-          <div class="em-series-script"><input type="text" value="${esc(t.series||t.name||'')}" oninput="u('series',this.value)"/></div>
-          <div class="em-subtitle-wrap">
-            <textarea oninput="u('subtitle',this.value)" placeholder="Subtitle (use \\n for line break)…">${esc(t.subtitle||'')}</textarea>
-          </div>
-        </div>
-        <div class="em-footer-mid">
-          <div class="em-page-lbl">PAGE</div>
-          <div class="em-page-val"><input type="text" value="${esc(t.cat||'')}" oninput="u('cat',this.value)" placeholder="—"/></div>
-        </div>
-        <div class="em-footer-right">${footerRight}</div>
-      </div>
-
+    <div class="edit-mirror banner-${t.banner||'blue'} ${layoutClass}">
+      ${isGate ? gateBody : standardBody}
+      ${footerHtml}
     </div>
   </div>
   ${colBtns}`;
@@ -1261,9 +1345,17 @@ function renderPreview(){
   }).join('');
 
   // Img panel
+  const isGate = t.layout === 'gate';
+  const hasImg3 = !!t.img3;
   let imgHtml='';
   const imgClass=hasImg1&&hasImg2?'two':hasImg1||hasImg2?'one':'';
-  if(!hasImg1&&!hasImg2){
+  if(isGate){
+    imgHtml = '';
+    if(hasImg1) imgHtml += `<img src="${t.img1}" alt="Diagram 1"/>`;
+    if(hasImg2) imgHtml += `<img src="${t.img2}" alt="Diagram 2"/>`;
+    if(hasImg3) imgHtml += `<img src="${t.img3}" alt="Diagram 3"/>`;
+    if(!imgHtml) imgHtml = `<div class="spec-img-empty">Upload diagram images in Edit tab</div>`;
+  } else if(!hasImg1&&!hasImg2){
     imgHtml=`<div class="spec-img-empty">Upload diagram images in Edit tab</div>`;
   } else if(hasImg1&&hasImg2){
     imgHtml=`<img src="${t.img1}" alt="Diagram 1"/><div class="spec-img-divider"></div><img src="${t.img2}" alt="Diagram 2"/>`;
@@ -1278,13 +1370,15 @@ function renderPreview(){
 
   const subtitleLines=(t.subtitle||'').split('\n').map(l=>esc(l)).join('<br/>');
 
+  const previewLayoutClass = isGate ? 'layout-gate' : '';
+
   document.getElementById('mainContent').innerHTML=`
   <div class="spec-wrap">
-    <div class="spec banner-${t.banner||'blue'}" id="theSpec">
+    <div class="spec banner-${t.banner||'blue'} ${previewLayoutClass}" id="theSpec">
 
       <!-- TOP: image | dims+notes -->
       <div class="spec-top">
-        <div class="spec-img-panel ${imgClass}">${imgHtml}</div>
+        <div class="spec-img-panel ${isGate?'':imgClass}">${imgHtml}</div>
 
         <div class="spec-right">
           <!-- DIMENSIONS -->
@@ -1301,6 +1395,22 @@ function renderPreview(){
         </div>
       </div>
 
+      <!-- GATE BOTTOM: dims+notes + materials side by side -->
+      ${isGate ? `
+      <div class="spec-gate-bottom">
+        <div class="spec-gate-left">
+          <div class="spec-dims-block">
+            <div class="spec-block-title spec-dims-title">DIMENSIONS</div>
+            <table class="spec-rt">${colGroup}${dimHead}${dimBody}</table>
+          </div>
+          <div class="spec-notes-block">
+            <div class="spec-block-title spec-notes-title">NOTES</div>
+            <table class="spec-rt">${colGroup}${noteHead}${noteBody}</table>
+            ${t.extraNote?'<div class="spec-extra-note">'+esc(t.extraNote)+'</div>':''}
+          </div>
+        </div>
+        <div class="spec-gate-right">` : ''}
+
       <!-- MATERIALS -->
       <div class="spec-mats">
         <div class="spec-mats-title">MATERIALS</div>
@@ -1314,6 +1424,10 @@ function renderPreview(){
           <tbody>${matRows}</tbody>
         </table>
       </div>
+
+      ${isGate ? `
+        </div>
+      </div>` : ''}
 
       <!-- FOOTER -->
       <div class="spec-footer">
