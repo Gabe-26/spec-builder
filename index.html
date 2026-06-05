@@ -638,7 +638,7 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .em-mat-table col.mc2-item{width:36px;}.em-mat-table col.mc2-qty{width:110px;}.em-mat-table col.mc2-code{width:120px;}.em-mat-table col.mc2-desc{width:auto;}.em-mat-table col.mc2-del{width:20px;}
 .em-mat-table th{background:#fff;color:#000;padding:4px 6px;text-align:center;font-size:11px;font-weight:bold;letter-spacing:.04em;border:1px solid #aaa;}
 .em-mat-table th.th2-item{color:#0000cc;}
-.em-mat-table td{padding:5px 6px;border:1px solid #ccc;vertical-align:top;height:auto;min-height:48px;}
+.em-mat-table td{padding:5px 6px;border:1px solid #ccc;vertical-align:top;height:auto;min-height:50px;}
 .em-mat-table tr:nth-child(even) td{background:#f8f8f8;}
 .em-mat-table td.em2-item{color:#0000cc;font-weight:bold;text-align:center;}
 .em-mat-table td.em2-code-blue{color:#0000cc;font-size:10px;text-align:center;}
@@ -646,6 +646,26 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);heig
 .em-mat-table input:hover{background:#fffbe8;border-color:#ccc;}
 .em-mat-table input:focus{outline:none;background:#fff;border-color:#0050cc;}
 .em-check-row{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:normal;margin-top:2px;}
+.mat-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;
+  cursor:pointer;border:none;transition:all .15s;
+  font-family:Arial,sans-serif;white-space:nowrap;
+}
+.mat-pill input[type=checkbox]{display:none;}
+.mat-pill-note{background:#ddeeff;color:#0044cc;}
+.mat-pill-note.active{background:#0044cc;color:#fff;}
+.mat-pill-note:hover{background:#bbddff;color:#0033aa;}
+.mat-pill-note.active:hover{background:#0033aa;color:#fff;}
+.mat-pill-item{background:#ffe8e8;color:#cc3333;}
+.mat-pill-item.active{background:#e06060;color:#fff;}
+.mat-pill-item:hover{background:#ffcccc;color:#aa2222;}
+.mat-pill-item.active:hover{background:#cc4444;color:#fff;}
+.mat-pills-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
+body.dark-mode .mat-pill-note{background:#1a2a44;color:#6699ff;}
+body.dark-mode .mat-pill-note.active{background:#2244aa;color:#ddeeff;}
+body.dark-mode .mat-pill-item{background:#3a1a1a;color:#ff8080;}
+body.dark-mode .mat-pill-item.active{background:#993333;color:#ffe8e8;}
 .em-check-row input[type=checkbox]{width:10px;height:10px;}
 .edit-mirror-footer{background:#fff;border-top:2px solid #444;display:flex;align-items:stretch;min-height:70px;flex-shrink:0;}
 .em-footer-left{flex:1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:5px 16px;border-right:2px solid #444;gap:12px;}
@@ -985,17 +1005,21 @@ function renderEdit(){
       <td class="em2-item"><input type="text" value="${esc(m.item)}" oninput="updMat(${mi},'item',this.value)"/></td>
       <td style="text-align:center;vertical-align:top">
         <input type="text" value="${esc(m.qty)}" oninput="updMat(${mi},'qty',this.value)"/>
-        <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.qty==='See notes'?'checked':''} onchange="updMat(${mi},'qty',this.checked?'See notes':'');renderEdit()"/> See notes</label>
+        <div class="mat-pills-wrap">
+          <button class="mat-pill mat-pill-note ${m.qty==='See notes'?'active':''}" onclick="updMat(${mi},'qty',this.classList.contains('active')?'':'See notes');renderEdit()">See notes</button>
+        </div>
       </td>
       <td class="${m.codeBlue?'em2-code-blue':''}">
         <input type="text" value="${esc(m.code)}" oninput="updMat(${mi},'code',this.value)"/>
-        <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.code==='See notes'?'checked':''} onchange="(()=>{updMat(${mi},'code',this.checked?'See notes':'');updMat(${mi},'codeBlue',this.checked);renderEdit()})()"/> See notes</label>
+        <div class="mat-pills-wrap">
+          <button class="mat-pill mat-pill-note ${m.code==='See notes'?'active':''}" onclick="(()=>{const on=!this.classList.contains('active');updMat(${mi},'code',on?'See notes':'');updMat(${mi},'codeBlue',on);renderEdit();})()">See notes</button>
+        </div>
       </td>
       <td>
         <input type="text" value="${esc(m.desc)}" oninput="updMat(${mi},'desc',this.value)"/>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;">
-          <label class="em-check-row" style="color:#0000cc"><input type="checkbox" ${m.descNote?'checked':''} onchange="setMatAppend(${mi},'note',this.checked)"/> See Notes</label>
-          ${t.dimRows.map((dr,dri)=>`<label class="em-check-row" style="color:#555"><input type="checkbox" ${(Number(m.seeItem)===(dri+1))?'checked':''} onchange="setMatAppend(${mi},'item',${dri+1},this.checked)"/> See item ${esc(dr.item||String(dri+1))}</label>`).join('')}
+        <div class="mat-pills-wrap">
+          <button class="mat-pill mat-pill-note ${m.descNote?'active':''}" onclick="setMatAppend(${mi},'note',!${m.descNote})">See Notes</button>
+          ${t.dimRows.map((dr,dri)=>`<button class="mat-pill mat-pill-item ${(Number(m.seeItem)===(dri+1))?'active':''}" onclick="setMatAppend(${mi},'item',${dri+1},!(${Number(m.seeItem)===(dri+1)}))">See item ${esc(dr.item||String(dri+1))}</button>`).join('')}
         </div>
       </td>
       <td><button class="icon-del" onclick="remMat(${mi})" title="Delete">✕</button></td>
